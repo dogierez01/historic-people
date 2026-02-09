@@ -16,8 +16,13 @@
         .info { flex-grow: 1; }
         .name { font-weight: bold; display: block; margin-bottom: 10px; font-size: 17px; text-transform: capitalize; color: #fff; }
         
-        /* Play Button Style */
-        .btn-play { border: none; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: white; background: #2f9e44; }
+        /* SMART BUTTON STYLES */
+        .btn-container { display: flex; gap: 8px; flex-wrap: wrap; }
+        button { border: none; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: white; transition: transform 0.1s; }
+        button:active { transform: scale(0.95); }
+        .btn-uk { background: #FF3B30; } /* Red for UK */
+        .btn-us { background: #007AFF; } /* Blue for US */
+        .btn-generic { background: #2f9e44; } /* Green for others */
         
         #status { text-align: center; color: #666; font-size: 12px; margin-top: 10px; }
         #modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); align-items: center; justify-content: center; flex-direction: column; }
@@ -68,8 +73,13 @@
                 let lower = file.name.toLowerCase();
                 if (lower.endsWith('.md') || lower.endsWith('.html') || lower.endsWith('.css') || lower.startsWith('.')) return;
 
-                // CLEANING LOGIC (Standard clean for ID)
-                let clean = lower.replace(/\.[^/.]+$/, "").replace(/[0-9]/g, "").trim();
+                // 1. ADVANCED CLEANING (Groups "Alexander UK" and "Alexander US" into ONE person)
+                let clean = lower
+                    .replace(/\.[^/.]+$/, "") 
+                    .replace(/ female| male| uk| us| english/gi, "") // Remove variations
+                    .replace(/[0-9]/g, "") 
+                    .trim();
+
                 let id = clean.replace(/[^a-z]/g, ""); 
                 let displayName = clean.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
 
@@ -80,8 +90,6 @@
             });
 
             let finalItems = Object.values(items).filter(f => f.audio.length > 0 || f.img);
-
-            // SIMPLE ALPHABETICAL SORT
             finalItems.sort((a, b) => a.name.localeCompare(b.name));
 
             render(finalItems);
@@ -102,11 +110,31 @@
                 <div class="info">
                     <span class="name">${f.name}</span>
                     <div class="btn-container">
-                        ${f.audio.map(file => `<button class="btn-play" onclick="play('${file}')">▶ Play Audio</button>`).join('')}
+                        ${f.audio.map(file => makeButton(file)).join('')}
                     </div>
                 </div>
             </div>
         `).join('');
+    }
+
+    // SMART BUTTON CREATOR
+    function makeButton(filename) {
+        let lower = filename.toLowerCase();
+        let label = "";
+        let cssClass = "btn-generic";
+
+        // Detect Country
+        if (lower.includes("uk")) { label += "🇬🇧 "; cssClass = "btn-uk"; }
+        else if (lower.includes("us")) { label += "🇺🇸 "; cssClass = "btn-us"; }
+        
+        // Detect Gender
+        if (lower.includes("female")) label += "👩 Female";
+        else if (lower.includes("male")) label += "👨 Male";
+
+        // Fallback if name is just "Alexander.mp3"
+        if (label === "") label = "▶ Play Audio";
+
+        return `<button class="${cssClass}" onclick="play('${filename}')">${label}</button>`;
     }
 
     function play(filename) { 
