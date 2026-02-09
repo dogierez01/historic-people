@@ -19,7 +19,20 @@
         .name { font-weight: bold; display: block; margin-bottom: 10px; font-size: 17px; text-transform: capitalize; color: #fff; }
         
         .btn-container { display: flex; gap: 6px; flex-wrap: wrap; }
-        button { border: none; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; color: white; }
+        
+        /* Button Style with Flex for Alignment */
+        button { 
+            border: none; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            font-size: 12px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            color: white; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+        }
         
         /* FREEDOM FIGHTERS COLORS (Country Based) */
         .btn-uk { background: #d63031; } /* British Red */
@@ -64,7 +77,7 @@
                 let name = file.name.toLowerCase();
                 if (name.includes(".html") || name.includes(".css") || name.startsWith(".")) return;
 
-                // CLEANING: Strip keywords to find the person's name
+                // CLEANING
                 let baseName = name
                     .replace(/\.(mp3|wav|jpg|png|jpeg)$/, "") 
                     .replace(/ female| male| uk| us/g, "") 
@@ -79,10 +92,28 @@
                 }
             });
 
-            // Filter and Sort People Alphabetically
             let sortedPeople = Object.values(people)
                 .filter(p => p.audios.length > 0 || p.img)
                 .sort((a, b) => a.name.localeCompare(b.name));
+
+            // ▼▼▼ CUSTOM SORTING LOGIC ▼▼▼
+            sortedPeople.forEach(p => {
+                p.audios.sort((a, b) => {
+                    let getScore = (filename) => {
+                        let lower = filename.toLowerCase();
+                        // 1. UK (Any Gender) -> Score 1
+                        if (lower.includes("uk")) return 1;
+                        // 2. US Male -> Score 2
+                        if (lower.includes("us") && lower.includes("male")) return 2;
+                        // 3. US Female -> Score 3
+                        if (lower.includes("us") && lower.includes("female")) return 3;
+                        // 4. Anything else -> Score 4
+                        return 4;
+                    };
+                    return getScore(a) - getScore(b);
+                });
+            });
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
             render(sortedPeople);
             status.style.display = 'none';
@@ -110,28 +141,34 @@
 
     function makeButton(filename) {
         let lower = filename.toLowerCase();
-        let label = "";
-        let css = "btn-generic"; // Default Green
+        let flag = "";
+        let text = "";
+        let css = "btn-generic"; 
 
-        // 1. DETERMINE COLOR (Country Based)
+        // 1. DETERMINE COUNTRY & COLOR
         if (lower.includes("uk")) {
-            label += "🇬🇧 ";
+            flag = "🇬🇧";
             css = "btn-uk"; // RED
         } else if (lower.includes("us")) {
-            label += "🇺🇸 ";
+            flag = "🇺🇸";
             css = "btn-us"; // BLUE
         }
 
-        // 2. DETERMINE TEXT (Gender)
+        // 2. DETERMINE GENDER TEXT
         if (lower.includes("female")) {
-            label += "Female";
+            text = "Female";
         } else if (lower.includes("male")) {
-            label += "Male";
+            text = "Male";
         } else {
-            label += "Play";
+            text = "Play";
         }
 
-        return `<button class="${css}" onclick="play('${filename}')">${label}</button>`;
+        // 3. BIGGER FLAG HTML (1.5x size)
+        let content = "";
+        if (flag) content += `<span style="font-size: 1.5em; line-height: 1;">${flag}</span>`;
+        content += `<span>${text}</span>`;
+
+        return `<button class="${css}" onclick="play('${filename}')">${content}</button>`;
     }
 
     function play(file) { 
