@@ -19,11 +19,12 @@
         .name { font-weight: bold; display: block; margin-bottom: 10px; font-size: 17px; text-transform: capitalize; color: #fff; }
         
         .btn-container { display: flex; gap: 6px; flex-wrap: wrap; }
-        button { border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: white; }
+        button { border: none; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; color: white; }
         
-        .btn-uk { background: #FF3B30; } /* Red */
-        .btn-us { background: #007AFF; } /* Blue */
-        .btn-generic { background: #2f9e44; } /* Green */
+        /* FREEDOM FIGHTERS COLORS (Country Based) */
+        .btn-uk { background: #d63031; } /* British Red */
+        .btn-us { background: #0984e3; } /* American Blue */
+        .btn-generic { background: #2f9e44; } /* Green fallback */
         
         #status { text-align: center; color: #666; font-size: 12px; margin-top: 10px; }
     </style>
@@ -63,8 +64,7 @@
                 let name = file.name.toLowerCase();
                 if (name.includes(".html") || name.includes(".css") || name.startsWith(".")) return;
 
-                // STRICT CLEANING: Remove all keywords to find the "Base Name"
-                // "alexander the great female uk.wav" -> "alexander the great"
+                // CLEANING: Strip keywords to find the person's name
                 let baseName = name
                     .replace(/\.(mp3|wav|jpg|png|jpeg)$/, "") 
                     .replace(/ female| male| uk| us/g, "") 
@@ -79,7 +79,7 @@
                 }
             });
 
-            // Filter out empty ones and sort
+            // Filter and Sort People Alphabetically
             let sortedPeople = Object.values(people)
                 .filter(p => p.audios.length > 0 || p.img)
                 .sort((a, b) => a.name.localeCompare(b.name));
@@ -111,14 +111,25 @@
     function makeButton(filename) {
         let lower = filename.toLowerCase();
         let label = "";
-        let css = "btn-generic";
+        let css = "btn-generic"; // Default Green
 
-        if (lower.includes("uk")) { label += "🇬🇧 "; css = "btn-uk"; }
-        if (lower.includes("us")) { label += "🇺🇸 "; css = "btn-us"; }
-        if (lower.includes("female")) label += "👩 Female";
-        if (lower.includes("male")) label += "👨 Male";
-        
-        if (!label) label = "▶ Play";
+        // 1. DETERMINE COLOR (Country Based)
+        if (lower.includes("uk")) {
+            label += "🇬🇧 ";
+            css = "btn-uk"; // RED
+        } else if (lower.includes("us")) {
+            label += "🇺🇸 ";
+            css = "btn-us"; // BLUE
+        }
+
+        // 2. DETERMINE TEXT (Gender)
+        if (lower.includes("female")) {
+            label += "Female";
+        } else if (lower.includes("male")) {
+            label += "Male";
+        } else {
+            label += "Play";
+        }
 
         return `<button class="${css}" onclick="play('${filename}')">${label}</button>`;
     }
