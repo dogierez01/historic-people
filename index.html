@@ -16,13 +16,8 @@
         .info { flex-grow: 1; }
         .name { font-weight: bold; display: block; margin-bottom: 10px; font-size: 17px; text-transform: capitalize; color: #fff; }
         
-        /* SMART BUTTON STYLES */
         .btn-container { display: flex; gap: 8px; flex-wrap: wrap; }
-        button { border: none; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: white; transition: transform 0.1s; }
-        button:active { transform: scale(0.95); }
-        .btn-uk { background: #FF3B30; } /* Red for UK */
-        .btn-us { background: #007AFF; } /* Blue for US */
-        .btn-generic { background: #2f9e44; } /* Green for others */
+        button { border: none; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: white; background: #2f9e44; margin-bottom: 5px; }
         
         #status { text-align: center; color: #666; font-size: 12px; margin-top: 10px; }
         #modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); align-items: center; justify-content: center; flex-direction: column; }
@@ -73,25 +68,45 @@
                 let lower = file.name.toLowerCase();
                 if (lower.endsWith('.md') || lower.endsWith('.html') || lower.endsWith('.css') || lower.startsWith('.')) return;
 
-                // 1. ADVANCED CLEANING (Groups "Alexander UK" and "Alexander US" into ONE person)
-                let clean = lower
-                    .replace(/\.[^/.]+$/, "") 
-                    .replace(/ female| male| uk| us| english/gi, "") // Remove variations
-                    .replace(/[0-9]/g, "") 
-                    .trim();
-
-                let id = clean.replace(/[^a-z]/g, ""); 
-                let displayName = clean.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
-
-                if (!items[id]) items[id] = { name: displayName, audio: [], img: "" };
-
-                if (lower.includes("wav") || lower.includes("mp3")) items[id].audio.push(file.name);
-                else if (lower.includes("jpg") || lower.includes("png") || lower.includes("jpeg")) items[id].img = file.name;
+                // SIMPLE CLEANING: Just remove the file extension to get the name
+                // "alexander the great female uk.wav" -> "alexander the great female uk"
+                let clean = lower.replace(/\.[^/.]+$/, "").replace(/_/g, " ").trim();
+                
+                // We create a separate card for EVERY file to be safe
+                // This guarantees nothing gets hidden
+                items[file.name] = { 
+                    name: clean.replace(/\b\w/g, l => l.toUpperCase()), // Capitalize 
+                    audio: file.name,
+                    img: "" // We will find the image separately
+                };
             });
 
-            let finalItems = Object.values(items).filter(f => f.audio.length > 0 || f.img);
-            finalItems.sort((a, b) => a.name.localeCompare(b.name));
+            // Second pass to find matching images (This is the tricky part)
+            // If we have "alexander.jpg", we try to match it to "alexander...wav"
+            let finalItems = [];
+            
+            // Separate audio and images
+            let audioFiles = files.filter(f => f.name.toLowerCase().endsWith('mp3') || f.name.toLowerCase().endsWith('wav'));
+            let imgFiles = files.filter(f => f.name.toLowerCase().endsWith('jpg') || f.name.toLowerCase().endsWith('png'));
 
+            audioFiles.forEach(audio => {
+                let audioName = audio.name.toLowerCase().replace(/\.[^/.]+$/, "");
+                
+                // Find best matching image
+                // Logic: If the image name is INSIDE the audio name
+                let bestImg = imgFiles.find(img => {
+                    let imgName = img.name.toLowerCase().replace(/\.[^/.]+$/, "");
+                    return audioName.includes(imgName);
+                });
+
+                finalItems.push({
+                    name: audioName.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase()),
+                    audio: audio.name,
+                    img: bestImg ? bestImg.name : ""
+                });
+            });
+
+            finalItems.sort((a, b) => a.name.localeCompare(b.name));
             render(finalItems);
             status.style.display = 'none';
 
@@ -110,51 +125,14 @@
                 <div class="info">
                     <span class="name">${f.name}</span>
                     <div class="btn-container">
-                        ${f.audio.map(file => makeButton(file)).join('')}
+                        <button onclick="play('${f.audio}')">▶ Play Audio</button>
                     </div>
                 </div>
             </div>
         `).join('');
     }
 
-    // SMART BUTTON CREATOR
-    function makeButton(filename) {
-        let lower = filename.toLowerCase();
-        let label = "";
-        let cssClass = "btn-generic";
-
-        // Detect Country
-        if (lower.includes("uk")) { label += "🇬🇧 "; cssClass = "btn-uk"; }
-        else if (lower.includes("us")) { label += "🇺🇸 "; cssClass = "btn-us"; }
-        
-        // Detect Gender
-        if (lower.includes("female")) label += "👩 Female";
-        else if (lower.includes("male")) label += "👨 Male";
-
-        // Fallback if name is just "Alexander.mp3"
-        if (label === "") label = "▶ Play Audio";
-
-        return `<button class="${cssClass}" onclick="play('${filename}')">${label}</button>`;
-    }
-
     function play(filename) { 
         player.src = RAW_URL + encodeURIComponent(filename); 
         player.play(); 
-        nowPlaying.innerText = "Playing: " + decodeURIComponent(filename).replace(/\.[^/.]+$/, "").replace(/_/g, " ");
-        window.scrollTo({top: 0, behavior: 'smooth'}); 
-    }
-    
-    function openModal(src) { if(src && !src.includes("placeholder")) { modal.style.display = "flex"; modalImg.src = src; } }
-    function closeModal() { modal.style.display = "none"; }
-    function filter(q) { 
-        let cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            let name = card.querySelector('.name').innerText.toLowerCase();
-            card.style.display = name.includes(q.toLowerCase()) ? 'flex' : 'none';
-        });
-    }
-    
-    init();
-</script>
-</body>
-</html>
+        nowPlaying.innerText = "Playing
