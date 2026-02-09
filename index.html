@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Historic People</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #121212; color: #e0e0e0; padding: 20px; padding-top: 140px; max-width: 600px; margin: 0 auto; }
+        #audio-bar { position: fixed; top: 0; left: 0; width: 100%; background: #000; border-bottom: 2px solid #333; padding: 10px; z-index: 1000; display: flex; flex-direction: column; align-items: center; }
+        #now-playing { color: #4dabf7; font-size: 13px; margin-bottom: 8px; font-weight: bold; text-align: center; }
+        #player { width: 95%; height: 40px; outline: none; }
+        .search { width: 100%; padding: 15px; font-size: 16px; border-radius: 12px; border: 1px solid #333; background: #1e1e1e; color: white; margin-bottom: 20px; }
+        .card { background: #1e1e1e; padding: 15px; margin-bottom: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; }
+        .img-container { text-align: center; cursor: zoom-in; flex-shrink: 0; }
+        .card img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; background: #333; border: 2px solid #555; }
+        .info { flex-grow: 1; }
+        .name { font-weight: bold; display: block; margin-bottom: 10px; font-size: 17px; text-transform: capitalize; color: #fff; }
+        
+        /* Play Button Style */
+        .btn-play { border: none; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: white; background: #2f9e44; }
+        
+        #status { text-align: center; color: #666; font-size: 12px; margin-top: 10px; }
+        #modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); align-items: center; justify-content: center; flex-direction: column; }
+        #modal img { max-width: 95%; max-height: 80vh; border-radius: 8px; }
+        #close-btn { color: white; font-size: 18px; margin-top: 20px; padding: 10px 30px; background: #333; border-radius: 30px; cursor: pointer; border: 1px solid #555; }
+    </style>
+</head>
+<body>
+
+    <div id="audio-bar">
+        <div id="now-playing">Select a track to play</div>
+        <audio id="player" controls controlsList="nodownload"></audio>
+    </div>
+
+    <input type="text" class="search" placeholder="Search history..." onkeyup="filter(this.value)">
+    <div id="list"></div>
+    <div id="status">Loading...</div>
+
+    <div id="modal" onclick="if(event.target.id === 'modal' || event.target.id === 'close-btn') closeModal()">
+        <img id="modal-img">
+        <div id="close-btn">Close Image</div>
+    </div>
+
+<script>
+    const USER = "dogierez01";
+    const REPO = "historic-people"; 
+    const BRANCH = "main";
+    const API_URL = `https://api.github.com/repos/${USER}/${REPO}/contents/`;
+    const RAW_URL = `https://raw.githubusercontent.com/${USER}/${REPO}/${BRANCH}/`;
+
+    const list = document.getElementById("list");
+    const status = document.getElementById("status");
+    const player = document.getElementById("player");
+    const nowPlaying = document.getElementById("now-playing");
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modal-img");
+
+    async function init() {
+        try {
+            const response = await fetch(API_URL);
+            if (response.status === 404) throw new Error("REPO NOT FOUND. Check spelling.");
+            if (!response.ok) throw new Error(`Connection failed: Error ${response.status}`);
+            
+            const files = await response.json();
+            let items = {};
+
+            files.forEach(file => {
+                let lower = file.name.toLowerCase();
+                if (lower.endsWith('.md') || lower.endsWith('.html') || lower.endsWith('.css') || lower.startsWith('.')) return;
+
+                // CLEANING LOGIC (Standard clean for ID)
+                let clean = lower.replace(/\.[^/.]+$/, "").replace(/[0-9]/g, "").trim();
+                let id = clean.replace(/[^a-z]/g, ""); 
+                let displayName = clean.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+
+                if (!items[id]) items[id] = { name: displayName, audio: [], img: "" };
+
+                if (lower.includes("wav") || lower.includes("mp3")) items[id].audio.push(file.name);
+                else if (lower.includes("jpg") || lower.includes("png") || lower.includes("jpeg")) items[id].img = file.name;
+            });
+
+            let finalItems = Object.values(items).filter(f => f.audio.length > 0 || f.img);
+
+            // SIMPLE ALPHABETICAL SORT
+            finalItems.sort((a, b) => a.name.localeCompare(b.name));
+
+            render(finalItems);
+            status.style.display = 'none';
+
+        } catch (error) { 
+            status.innerHTML = "❌ " + error.message; 
+            status.style.color = "red";
+        }
+    }
+
+    function render(items) {
+        list.innerHTML = items.map(f => `
+            <div class="card">
+                <div class="img-container" onclick="openModal('${f.img ? RAW_URL + encodeURIComponent(f.img) : ''}')">
+                    <img src="${f.img ? RAW_URL + encodeURIComponent(f.img) : ''}" onerror="this.src='https://via.placeholder.com/70?text=?'">
+                </div>
+                <div class="info">
+                    <span class="name">${f.name}</span>
+                    <div class="btn-container">
+                        ${f.audio.map(file => `<button class="btn-play" onclick="play('${file}')">▶ Play Audio</button>`).join('')}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function play(filename) { 
+        player.src = RAW_URL + encodeURIComponent(filename); 
+        player.play(); 
+        nowPlaying.innerText = "Playing: " + decodeURIComponent(filename).replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+        window.scrollTo({top: 0, behavior: 'smooth'}); 
+    }
+    
+    function openModal(src) { if(src && !src.includes("placeholder")) { modal.style.display = "flex"; modalImg.src = src; } }
+    function closeModal() { modal.style.display = "none"; }
+    function filter(q) { 
+        let cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            let name = card.querySelector('.name').innerText.toLowerCase();
+            card.style.display = name.includes(q.toLowerCase()) ? 'flex' : 'none';
+        });
+    }
+    
+    init();
+</script>
+</body>
+</html>
