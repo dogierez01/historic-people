@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historic People</title>
     <style>
         body { font-family: -apple-system, sans-serif; background: #121212; color: #e0e0e0; padding: 20px; padding-top: 140px; max-width: 600px; margin: 0 auto; }
@@ -10,25 +10,22 @@
         #now-playing { color: #4dabf7; font-size: 13px; margin-bottom: 8px; font-weight: bold; text-align: center; }
         #player { width: 95%; height: 40px; outline: none; }
         .search { width: 100%; padding: 15px; font-size: 16px; border-radius: 12px; border: 1px solid #333; background: #1e1e1e; color: white; margin-bottom: 20px; }
+        
         .card { background: #1e1e1e; padding: 15px; margin-bottom: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; }
-        .img-container { text-align: center; cursor: zoom-in; flex-shrink: 0; }
+        .img-container { text-align: center; flex-shrink: 0; }
         .card img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; background: #333; border: 2px solid #555; }
+        
         .info { flex-grow: 1; }
         .name { font-weight: bold; display: block; margin-bottom: 10px; font-size: 17px; text-transform: capitalize; color: #fff; }
         
         .btn-container { display: flex; gap: 6px; flex-wrap: wrap; }
-        button { border: none; padding: 8px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: white; transition: transform 0.1s; }
-        button:active { transform: scale(0.95); }
+        button { border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; color: white; }
         
-        /* Button Colors */
         .btn-uk { background: #FF3B30; } /* Red */
         .btn-us { background: #007AFF; } /* Blue */
         .btn-generic { background: #2f9e44; } /* Green */
         
         #status { text-align: center; color: #666; font-size: 12px; margin-top: 10px; }
-        #modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); align-items: center; justify-content: center; flex-direction: column; }
-        #modal img { max-width: 95%; max-height: 80vh; border-radius: 8px; }
-        #close-btn { color: white; font-size: 18px; margin-top: 20px; padding: 10px 30px; background: #333; border-radius: 30px; cursor: pointer; border: 1px solid #555; }
     </style>
 </head>
 <body>
@@ -42,11 +39,6 @@
     <div id="list"></div>
     <div id="status">Loading...</div>
 
-    <div id="modal" onclick="if(event.target.id === 'modal' || event.target.id === 'close-btn') closeModal()">
-        <img id="modal-img">
-        <div id="close-btn">Close Image</div>
-    </div>
-
 <script>
     const USER = "dogierez01";
     const REPO = "historic-people"; 
@@ -58,102 +50,88 @@
     const status = document.getElementById("status");
     const player = document.getElementById("player");
     const nowPlaying = document.getElementById("now-playing");
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modal-img");
 
     async function init() {
         try {
             const response = await fetch(API_URL);
-            if (response.status === 404) throw new Error("REPO NOT FOUND. Check spelling.");
-            if (!response.ok) throw new Error(`Connection failed: Error ${response.status}`);
+            if (!response.ok) throw new Error("Repo not found or empty.");
             
             const files = await response.json();
-            let items = {};
+            let people = {};
 
             files.forEach(file => {
-                let lower = file.name.toLowerCase();
-                if (lower.endsWith('.md') || lower.endsWith('.html') || lower.endsWith('.css') || lower.startsWith('.')) return;
+                let name = file.name.toLowerCase();
+                if (name.includes(".html") || name.includes(".css") || name.startsWith(".")) return;
 
-                // 1. SMART CLEANING (This is the magic part)
-                // It removes "female", "male", "uk", "us" to find the REAL name.
-                let baseName = lower
-                    .replace(/\.[^/.]+$/, "") // Remove extension
-                    .replace(/ female| male| uk| us/gi, "") // Remove variations
-                    .replace(/_/g, " ") // Replace underscores with spaces
+                // STRICT CLEANING: Remove all keywords to find the "Base Name"
+                // "alexander the great female uk.wav" -> "alexander the great"
+                let baseName = name
+                    .replace(/\.(mp3|wav|jpg|png|jpeg)$/, "") 
+                    .replace(/ female| male| uk| us/g, "") 
                     .trim();
 
-                // Create the person if they don't exist yet
-                if (!items[baseName]) items[baseName] = { name: baseName, audio: [], img: "" };
+                if (!people[baseName]) people[baseName] = { name: baseName, audios: [], img: "" };
 
-                // Sort files into the right person
-                if (lower.includes("wav") || lower.includes("mp3")) {
-                    items[baseName].audio.push(file.name);
-                } else if (lower.includes("jpg") || lower.includes("png") || lower.includes("jpeg")) {
-                    items[baseName].img = file.name;
+                if (name.includes(".wav") || name.includes(".mp3")) {
+                    people[baseName].audios.push(file.name);
+                } else if (name.includes(".jpg") || name.includes(".png")) {
+                    people[baseName].img = file.name;
                 }
             });
 
-            // Prepare list and Sort Alphabetically
-            let finalItems = Object.values(items).filter(f => f.audio.length > 0 || f.img);
-            finalItems.sort((a, b) => a.name.localeCompare(b.name));
+            // Filter out empty ones and sort
+            let sortedPeople = Object.values(people)
+                .filter(p => p.audios.length > 0 || p.img)
+                .sort((a, b) => a.name.localeCompare(b.name));
 
-            render(finalItems);
+            render(sortedPeople);
             status.style.display = 'none';
 
         } catch (error) { 
-            status.innerHTML = "❌ " + error.message; 
-            status.style.color = "red";
+            status.innerText = "Error: " + error.message; 
         }
     }
 
     function render(items) {
-        list.innerHTML = items.map(f => `
+        list.innerHTML = items.map(p => `
             <div class="card">
-                <div class="img-container" onclick="openModal('${f.img ? RAW_URL + encodeURIComponent(f.img) : ''}')">
-                    <img src="${f.img ? RAW_URL + encodeURIComponent(f.img) : ''}" onerror="this.src='https://via.placeholder.com/70?text=?'">
+                <div class="img-container">
+                    <img src="${p.img ? RAW_URL + encodeURIComponent(p.img) : 'https://via.placeholder.com/70?text=?'}" onerror="this.src='https://via.placeholder.com/70?text=?'">
                 </div>
                 <div class="info">
-                    <span class="name" style="text-transform: capitalize;">${f.name}</span>
+                    <span class="name" style="text-transform: capitalize;">${p.name}</span>
                     <div class="btn-container">
-                        ${f.audio.map(file => makeButton(file)).join('')}
+                        ${p.audios.map(audio => makeButton(audio)).join('')}
                     </div>
                 </div>
             </div>
         `).join('');
     }
 
-    // This makes the buttons look smart (Flag + Gender)
     function makeButton(filename) {
         let lower = filename.toLowerCase();
         let label = "";
-        let cssClass = "btn-generic";
+        let css = "btn-generic";
 
-        if (lower.includes("uk")) { label += "🇬🇧 "; cssClass = "btn-uk"; }
-        if (lower.includes("us")) { label += "🇺🇸 "; cssClass = "btn-us"; }
-        
+        if (lower.includes("uk")) { label += "🇬🇧 "; css = "btn-uk"; }
+        if (lower.includes("us")) { label += "🇺🇸 "; css = "btn-us"; }
         if (lower.includes("female")) label += "👩 Female";
-        else if (lower.includes("male")) label += "👨 Male";
+        if (lower.includes("male")) label += "👨 Male";
         
-        if (label === "") label = "▶ Play";
+        if (!label) label = "▶ Play";
 
-        return `<button class="${cssClass}" onclick="play('${filename}')">${label}</button>`;
+        return `<button class="${css}" onclick="play('${filename}')">${label}</button>`;
     }
 
-    function play(filename) { 
-        player.src = RAW_URL + encodeURIComponent(filename); 
-        player.play(); 
-        nowPlaying.innerText = "Playing: " + decodeURIComponent(filename).replace(/\.[^/.]+$/, "").replace(/_/g, " ");
-        window.scrollTo({top: 0, behavior: 'smooth'}); 
+    function play(file) { 
+        player.src = RAW_URL + encodeURIComponent(file); 
+        player.play();
+        nowPlaying.innerText = file.replace(/_/g, " "); 
     }
     
-    function openModal(src) { if(src && !src.includes("placeholder")) { modal.style.display = "flex"; modalImg.src = src; } }
-    function closeModal() { modal.style.display = "none"; }
     function filter(q) { 
         let cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            let name = card.querySelector('.name').innerText.toLowerCase();
-            card.style.display = name.includes(q.toLowerCase()) ? 'flex' : 'none';
-        });
+        cards.forEach(c => c.style.display = c.innerText.toLowerCase().includes(q.toLowerCase()) ? 'flex' : 'none');
     }
     
     init();
