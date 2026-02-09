@@ -18,26 +18,25 @@
         .info { flex-grow: 1; }
         .name { font-weight: bold; display: block; margin-bottom: 10px; font-size: 17px; text-transform: capitalize; color: #fff; }
         
-        .btn-container { display: flex; gap: 6px; flex-wrap: wrap; }
+        .btn-container { display: flex; gap: 8px; flex-wrap: wrap; }
         
-        /* Button Style with Flex for Alignment */
         button { 
             border: none; 
-            padding: 6px 12px; 
-            border-radius: 6px; 
+            padding: 4px 14px; /* Slightly less vertical padding since flag is huge */
+            border-radius: 8px; 
             font-size: 12px; 
             font-weight: 700; 
             cursor: pointer; 
             color: white; 
             display: flex; 
             align-items: center; 
-            gap: 6px; 
+            gap: 10px; /* More space between Giant Flag and Text */
         }
         
-        /* FREEDOM FIGHTERS COLORS (Country Based) */
+        /* FREEDOM FIGHTERS COLORS */
         .btn-uk { background: #d63031; } /* British Red */
         .btn-us { background: #0984e3; } /* American Blue */
-        .btn-generic { background: #2f9e44; } /* Green fallback */
+        .btn-generic { background: #2f9e44; } /* Green */
         
         #status { text-align: center; color: #666; font-size: 12px; margin-top: 10px; }
     </style>
@@ -96,25 +95,6 @@
                 .filter(p => p.audios.length > 0 || p.img)
                 .sort((a, b) => a.name.localeCompare(b.name));
 
-            // ▼▼▼ CUSTOM SORTING LOGIC ▼▼▼
-            sortedPeople.forEach(p => {
-                p.audios.sort((a, b) => {
-                    let getScore = (filename) => {
-                        let lower = filename.toLowerCase();
-                        // 1. UK (Any Gender) -> Score 1
-                        if (lower.includes("uk")) return 1;
-                        // 2. US Male -> Score 2
-                        if (lower.includes("us") && lower.includes("male")) return 2;
-                        // 3. US Female -> Score 3
-                        if (lower.includes("us") && lower.includes("female")) return 3;
-                        // 4. Anything else -> Score 4
-                        return 4;
-                    };
-                    return getScore(a) - getScore(b);
-                });
-            });
-            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-
             render(sortedPeople);
             status.style.display = 'none';
 
@@ -124,7 +104,13 @@
     }
 
     function render(items) {
-        list.innerHTML = items.map(p => `
+        list.innerHTML = items.map(p => {
+            // STRICT SORTING ENFORCER: UK -> US Male -> US Female
+            p.audios.sort((a, b) => {
+                return getSortScore(a) - getSortScore(b);
+            });
+            
+            return `
             <div class="card">
                 <div class="img-container">
                     <img src="${p.img ? RAW_URL + encodeURIComponent(p.img) : 'https://via.placeholder.com/70?text=?'}" onerror="this.src='https://via.placeholder.com/70?text=?'">
@@ -136,7 +122,21 @@
                     </div>
                 </div>
             </div>
-        `).join('');
+            `;
+        }).join('');
+    }
+
+    // Assigns a score to force order
+    function getSortScore(filename) {
+        let lower = filename.toLowerCase();
+        // 1. UK (Any Gender) -> Score 10 (First)
+        if (/(^|\W)uk(\W|$)/.test(lower)) return 10;
+        // 2. US Male -> Score 20 (Middle)
+        if (/(^|\W)us(\W|$)/.test(lower) && lower.includes("male")) return 20;
+        // 3. US Female -> Score 30 (Last)
+        if (/(^|\W)us(\W|$)/.test(lower) && lower.includes("female")) return 30;
+        // 4. Anything else -> Score 100
+        return 100;
     }
 
     function makeButton(filename) {
@@ -146,26 +146,23 @@
         let css = "btn-generic"; 
 
         // 1. DETERMINE COUNTRY & COLOR
-        if (lower.includes("uk")) {
+        if (/(^|\W)uk(\W|$)/.test(lower)) {
             flag = "🇬🇧";
             css = "btn-uk"; // RED
-        } else if (lower.includes("us")) {
+        } else if (/(^|\W)us(\W|$)/.test(lower)) {
             flag = "🇺🇸";
             css = "btn-us"; // BLUE
         }
 
         // 2. DETERMINE GENDER TEXT
-        if (lower.includes("female")) {
-            text = "Female";
-        } else if (lower.includes("male")) {
-            text = "Male";
-        } else {
-            text = "Play";
-        }
+        if (lower.includes("female")) text = "Female";
+        else if (lower.includes("male")) text = "Male";
+        else text = "Play";
 
-        // 3. BIGGER FLAG HTML (1.5x size)
+        // 3. MAXIMIZED FLAG (3.0x size)
         let content = "";
-        if (flag) content += `<span style="font-size: 1.5em; line-height: 1;">${flag}</span>`;
+        // Changed from 1.8em to 3.0em as requested
+        if (flag) content += `<span style="font-size: 3.0em; line-height: 0.8;">${flag}</span>`;
         content += `<span>${text}</span>`;
 
         return `<button class="${css}" onclick="play('${filename}')">${content}</button>`;
