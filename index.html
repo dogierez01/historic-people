@@ -66,26 +66,37 @@
         #btn-listen.active { background: #4dabf7; } 
         #btn-quiz.active { background: #e056fd; }   
 
-        /* PLAYER ROW - FIXED TO PREVENT SQUASHING */
+        /* PLAYER ROW */
         #audio-controls { width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: 10px; }
         #now-playing { color: #4dabf7; font-size: 12px; margin-bottom: 5px; font-weight: bold; text-align: center; }
+        
         .player-row { 
             display: flex; align-items: center; justify-content: center; 
             gap: 10px; width: 95%; max-width: 600px; 
         }
         #player { flex-grow: 1; height: 50px; outline: none; }
 
-        /* NEON SNAIL STYLES - WITH "NO SHRINK" FIX */
+        /* NEON SNAIL STYLES - FORCED VISIBILITY */
         #btn-snail {
-            flex-shrink: 0; /* <--- THIS PREVENTS IT FROM DISAPPEARING */
-            background: #111; border: 4px solid #ff0033; border-radius: 15px;
-            width: 80px; height: 60px; font-size: 40px; cursor: pointer;
+            flex-shrink: 0;         /* 1. Do not shrink */
+            min-width: 80px;        /* 2. Force minimum width */
+            width: 80px; 
+            height: 60px; 
+            
+            background: #111; 
+            border: 4px solid #ff0033; /* Neon Red Frame */
+            border-radius: 15px;
+            font-size: 40px; 
+            cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s ease; opacity: 1; filter: none;
+            transition: all 0.2s ease; 
+            opacity: 1; filter: none;
             box-shadow: 0 0 10px #ff0033, inset 0 0 5px rgba(255, 0, 51, 0.3);
             padding: 0; margin-left: 5px;
+            z-index: 2002;          /* 3. Sit on top of everything */
         }
         #btn-snail:hover { background: #222; transform: scale(1.05); }
+        
         #btn-snail.active {
             border-color: #39ff14; background: #0a1f0a; 
             box-shadow: 0 0 20px #39ff14, inset 0 0 10px rgba(57, 255, 20, 0.4); 
@@ -156,7 +167,7 @@
     </div>
 
     <script>
-        // 1. HARDCODED REPO DETAILS (Fail-Safe)
+        // 1. HARDCODED REPO DETAILS
         const USER = "dogierez01";
         const REPO = "historic-people"; 
         const BRANCH = "main";
@@ -175,18 +186,30 @@
         // 3. INIT FUNCTION
         async function init() {
             try {
+                // Fetch File List
                 const response = await fetch(API_URL);
                 if (!response.ok) throw new Error("Could not find files. Check Repo Name.");
+                
                 const files = await response.json();
                 let people = {};
 
+                // Process Files
                 files.forEach(file => {
                     let name = file.name.toLowerCase();
                     if (name.includes(".html") || name.includes(".css") || name.startsWith(".") || name === "welcome-poster.png") return;
-                    let baseName = name.replace(/\.(mp3|wav|jpg|png|jpeg)$/, "").replace(/ female| male| uk| us| bio/gi, "").trim();
+                    
+                    let baseName = name
+                        .replace(/\.(mp3|wav|jpg|png|jpeg)$/, "") 
+                        .replace(/ female| male| uk| us| bio/gi, "") 
+                        .trim();
+
                     if (!people[baseName]) people[baseName] = { name: baseName, audios: [], img: "" };
-                    if (name.includes(".wav") || name.includes(".mp3")) { people[baseName].audios.push(file.name); } 
-                    else if (name.includes(".jpg") || name.includes(".png")) { people[baseName].img = file.name; }
+
+                    if (name.includes(".wav") || name.includes(".mp3")) {
+                        people[baseName].audios.push(file.name);
+                    } else if (name.includes(".jpg") || name.includes(".png")) {
+                        people[baseName].img = file.name;
+                    }
                 });
 
                 let sortedPeople = Object.values(people)
@@ -194,9 +217,13 @@
                     .sort((a, b) => a.name.localeCompare(b.name));
 
                 render(sortedPeople);
+                
+                // Hide Loading Status
                 if(status) status.style.display = 'none';
 
-            } catch (error) { if(status) status.innerText = "Error: " + error.message; }
+            } catch (error) { 
+                if(status) status.innerText = "Error: " + error.message; 
+            }
         }
 
         // 4. RENDER FUNCTION
@@ -233,7 +260,15 @@
             if (lower.includes("female")) { text = "Female"; if (!flag) css = "btn-female"; } 
             else if (lower.includes("male")) { text = "Male"; if (!flag) css = "btn-male"; }
             
-            let content = flag ? `<span style="font-size: 3.0em; line-height: 0.8;">${flag}</span><span>${text}</span>` : text;
+            let content = "";
+            if (flag) {
+                // Big Flag Mode
+                content += `<span style="font-size: 3.0em; line-height: 0.8;">${flag}</span>`;
+                content += `<span>${text}</span>`;
+            } else {
+                content = text;
+            }
+
             return `<button class="play-btn ${css}" onclick="play('${filename}')">${content}</button>`;
         }
 
@@ -264,4 +299,31 @@
         // 7. TAB LOGIC
         function switchTab(mode) {
             const listenContent = document.getElementById('content-listen');
-            const quizContent
+            const quizContent = document.getElementById('content-quiz');
+            const audioControls = document.getElementById('audio-controls'); 
+            const btnListen = document.getElementById('btn-listen');
+            const btnQuiz = document.getElementById('btn-quiz');
+
+            if (mode === 'listen') {
+                listenContent.style.display = 'block';
+                quizContent.style.display = 'none';
+                audioControls.style.display = 'flex'; 
+                btnListen.classList.add('active');
+                btnQuiz.classList.remove('active');
+            } else {
+                listenContent.style.display = 'none';
+                quizContent.style.display = 'block';
+                audioControls.style.display = 'none'; 
+                btnListen.classList.remove('active');
+                btnQuiz.classList.add('active');
+            }
+        }
+
+        function filter(q) { document.querySelectorAll('.card').forEach(c => c.style.display = c.innerText.toLowerCase().includes(q.toLowerCase()) ? 'flex' : 'none'); }
+
+        // 8. START THE ENGINE
+        init();
+
+    </script>
+</body>
+</html>
