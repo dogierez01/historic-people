@@ -5,54 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historic People</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #121212; color: #e0e0e0; padding: 20px; padding-top: 140px; max-width: 600px; margin: 0 auto; }
-        #audio-bar { position: fixed; top: 0; left: 0; width: 100%; background: #000; border-bottom: 2px solid #333; padding: 10px; z-index: 1000; display: flex; flex-direction: column; align-items: center; }
-        #now-playing { color: #4dabf7; font-size: 13px; margin-bottom: 8px; font-weight: bold; text-align: center; }
-        #player { width: 95%; height: 40px; outline: none; }
-        .search { width: 100%; padding: 15px; font-size: 16px; border-radius: 12px; border: 1px solid #333; background: #1e1e1e; color: white; margin-bottom: 20px; }
+        /* BASE STYLES */
+        body { font-family: -apple-system, sans-serif; background: #121212; color: #e0e0e0; margin: 0; padding: 0; overflow-x: hidden; }
+        
+        /* FIXED HEADER WITH TABS */
+        #header-area {
+            position: fixed; top: 0; left: 0; width: 100%; 
+            background: #000; border-bottom: 2px solid #333; 
+            z-index: 2000; display: flex; flex-direction: column; align-items: center;
+            padding-bottom: 10px;
+        }
+
+        #app-title {
+            color: #fff; font-size: 16px; font-weight: 900; 
+            margin: 10px 0; letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        /* TOGGLE SWITCH STYLE */
+        .toggle-container {
+            display: flex; background: #1e1e1e; border-radius: 30px; 
+            padding: 4px; border: 1px solid #333;
+        }
+        .toggle-btn {
+            padding: 8px 24px; border-radius: 25px; border: none; 
+            font-size: 13px; font-weight: bold; cursor: pointer; 
+            color: #888; background: transparent; transition: all 0.2s;
+        }
+        .toggle-btn.active {
+            color: #000; box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        #btn-listen.active { background: #4dabf7; } /* Blue for Listen */
+        #btn-quiz.active { background: #e056fd; }   /* Pink for Quiz */
+
+        /* CONTENT AREAS */
+        #content-listen { padding: 20px; padding-top: 130px; max-width: 600px; margin: 0 auto; display: block; }
+        #content-quiz { display: none; width: 100%; height: 100vh; padding-top: 100px; box-sizing: border-box; }
+        
+        iframe { width: 100%; height: 100%; border: none; background: #121212; }
+
+        /* LISTENING APP STYLES */
+        #now-playing { color: #4dabf7; font-size: 12px; margin-bottom: 5px; font-weight: bold; text-align: center; }
+        #player { width: 90%; height: 35px; outline: none; margin-bottom: 5px; }
+        .search { width: 100%; padding: 15px; font-size: 16px; border-radius: 12px; border: 1px solid #333; background: #1e1e1e; color: white; margin-bottom: 20px; box-sizing: border-box; }
         
         .card { background: #1e1e1e; padding: 15px; margin-bottom: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; }
         .img-container { text-align: center; flex-shrink: 0; }
         .card img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; background: #333; border: 2px solid #555; }
-        
         .info { flex-grow: 1; }
         .name { font-weight: bold; display: block; margin-bottom: 10px; font-size: 17px; text-transform: capitalize; color: #fff; }
-        
         .btn-container { display: flex; gap: 8px; flex-wrap: wrap; }
         
-        button { 
-            border: none; 
-            padding: 4px 14px; /* Slightly less vertical padding since flag is huge */
-            border-radius: 8px; 
-            font-size: 12px; 
-            font-weight: 700; 
-            cursor: pointer; 
-            color: white; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; /* More space between Giant Flag and Text */
+        button.play-btn { 
+            border: none; padding: 4px 14px; border-radius: 8px; 
+            font-size: 12px; font-weight: 700; cursor: pointer; color: white; 
+            display: flex; align-items: center; gap: 10px; 
         }
-        
-        /* FREEDOM FIGHTERS COLORS */
-        .btn-uk { background: #d63031; } /* British Red */
-        .btn-us { background: #0984e3; } /* American Blue */
-        .btn-generic { background: #2f9e44; } /* Green */
-        
-        #status { text-align: center; color: #666; font-size: 12px; margin-top: 10px; }
+        .btn-uk { background: #d63031; } .btn-us { background: #0984e3; } .btn-generic { background: #2f9e44; }
     </style>
 </head>
 <body>
 
-    <div id="audio-bar">
-        <div id="now-playing">Select a track to play</div>
-        <audio id="player" controls controlsList="nodownload"></audio>
+    <div id="header-area">
+        <div id="app-title">🏛️ Historic People</div>
+        
+        <div class="toggle-container">
+            <button id="btn-listen" class="toggle-btn active" onclick="switchTab('listen')">🎧 Listen</button>
+            <button id="btn-quiz" class="toggle-btn" onclick="switchTab('quiz')">🧠 Quiz</button>
+        </div>
+
+        <div id="audio-controls" style="width:100%; display:flex; flex-direction:column; align-items:center; margin-top:10px;">
+            <div id="now-playing">Select a track</div>
+            <audio id="player" controls controlsList="nodownload"></audio>
+        </div>
     </div>
 
-    <input type="text" class="search" placeholder="Search history..." onkeyup="filter(this.value)">
-    <div id="list"></div>
-    <div id="status">Loading...</div>
+    <div id="content-listen">
+        <input type="text" class="search" placeholder="Search history..." onkeyup="filter(this.value)">
+        <div id="list"></div>
+        <div id="status" style="text-align:center; color:#666; margin-top:20px;">Loading...</div>
+    </div>
+
+    <div id="content-quiz">
+        <iframe src="https://historic-people-lingua-paharmacia.netlify.app/"></iframe>
+    </div>
 
 <script>
+    /* --- TAB SWITCHING LOGIC --- */
+    function switchTab(mode) {
+        const listenContent = document.getElementById('content-listen');
+        const quizContent = document.getElementById('content-quiz');
+        const audioControls = document.getElementById('audio-controls');
+        
+        const btnListen = document.getElementById('btn-listen');
+        const btnQuiz = document.getElementById('btn-quiz');
+
+        if (mode === 'listen') {
+            listenContent.style.display = 'block';
+            quizContent.style.display = 'none';
+            audioControls.style.display = 'flex'; // Show player
+            btnListen.classList.add('active');
+            btnQuiz.classList.remove('active');
+        } else {
+            listenContent.style.display = 'none';
+            quizContent.style.display = 'block';
+            audioControls.style.display = 'none'; // Hide player to save space
+            btnListen.classList.remove('active');
+            btnQuiz.classList.add('active');
+        }
+    }
+
+    /* --- YOUR EXISTING LISTENING APP LOGIC --- */
     const USER = "dogierez01";
     const REPO = "historic-people"; 
     const BRANCH = "main";
@@ -67,7 +129,7 @@
     async function init() {
         try {
             const response = await fetch(API_URL);
-            if (!response.ok) throw new Error("Repo not found or empty.");
+            if (!response.ok) throw new Error("Repo not found.");
             
             const files = await response.json();
             let people = {};
@@ -76,7 +138,6 @@
                 let name = file.name.toLowerCase();
                 if (name.includes(".html") || name.includes(".css") || name.startsWith(".")) return;
 
-                // CLEANING
                 let baseName = name
                     .replace(/\.(mp3|wav|jpg|png|jpeg)$/, "") 
                     .replace(/ female| male| uk| us/g, "") 
@@ -98,17 +159,12 @@
             render(sortedPeople);
             status.style.display = 'none';
 
-        } catch (error) { 
-            status.innerText = "Error: " + error.message; 
-        }
+        } catch (error) { status.innerText = "Error: " + error.message; }
     }
 
     function render(items) {
         list.innerHTML = items.map(p => {
-            // STRICT SORTING ENFORCER: UK -> US Male -> US Female
-            p.audios.sort((a, b) => {
-                return getSortScore(a) - getSortScore(b);
-            });
+            p.audios.sort((a, b) => getSortScore(a) - getSortScore(b));
             
             return `
             <div class="card">
@@ -116,56 +172,40 @@
                     <img src="${p.img ? RAW_URL + encodeURIComponent(p.img) : 'https://via.placeholder.com/70?text=?'}" onerror="this.src='https://via.placeholder.com/70?text=?'">
                 </div>
                 <div class="info">
-                    <span class="name" style="text-transform: capitalize;">${p.name}</span>
+                    <span class="name">${p.name}</span>
                     <div class="btn-container">
                         ${p.audios.map(audio => makeButton(audio)).join('')}
                     </div>
                 </div>
-            </div>
-            `;
+            </div>`;
         }).join('');
     }
 
-    // Assigns a score to force order
     function getSortScore(filename) {
         let lower = filename.toLowerCase();
-        // 1. UK (Any Gender) -> Score 10 (First)
         if (/(^|\W)uk(\W|$)/.test(lower)) return 10;
-        // 2. US Male -> Score 20 (Middle)
         if (/(^|\W)us(\W|$)/.test(lower) && lower.includes("male")) return 20;
-        // 3. US Female -> Score 30 (Last)
         if (/(^|\W)us(\W|$)/.test(lower) && lower.includes("female")) return 30;
-        // 4. Anything else -> Score 100
         return 100;
     }
 
     function makeButton(filename) {
         let lower = filename.toLowerCase();
         let flag = "";
-        let text = "";
+        let text = "Play";
         let css = "btn-generic"; 
 
-        // 1. DETERMINE COUNTRY & COLOR
-        if (/(^|\W)uk(\W|$)/.test(lower)) {
-            flag = "🇬🇧";
-            css = "btn-uk"; // RED
-        } else if (/(^|\W)us(\W|$)/.test(lower)) {
-            flag = "🇺🇸";
-            css = "btn-us"; // BLUE
-        }
+        if (/(^|\W)uk(\W|$)/.test(lower)) { flag = "🇬🇧"; css = "btn-uk"; }
+        else if (/(^|\W)us(\W|$)/.test(lower)) { flag = "🇺🇸"; css = "btn-us"; }
 
-        // 2. DETERMINE GENDER TEXT
         if (lower.includes("female")) text = "Female";
         else if (lower.includes("male")) text = "Male";
-        else text = "Play";
 
-        // 3. MAXIMIZED FLAG (3.0x size)
         let content = "";
-        // Changed from 1.8em to 3.0em as requested
         if (flag) content += `<span style="font-size: 3.0em; line-height: 0.8;">${flag}</span>`;
         content += `<span>${text}</span>`;
 
-        return `<button class="${css}" onclick="play('${filename}')">${content}</button>`;
+        return `<button class="play-btn ${css}" onclick="play('${filename}')">${content}</button>`;
     }
 
     function play(file) { 
