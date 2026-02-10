@@ -4,31 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Historic People</title>
+    
+    <script>
+        function startApp() {
+            var splash = document.getElementById('splash-screen');
+            if(splash) {
+                splash.style.opacity = '0';
+                setTimeout(function() { splash.style.display = 'none'; }, 500);
+            }
+        }
+    </script>
+
     <style>
         /* BASE STYLES */
         body { font-family: -apple-system, sans-serif; background: #121212; color: #e0e0e0; margin: 0; padding: 0; overflow-x: hidden; }
-        
-        /* SPLASH SCREEN STYLES */
-        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; }
-        #splash-img { max-width: 95%; max-height: 75vh; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.5); margin-bottom: 25px; object-fit: contain; }
-        #start-btn { padding: 15px 40px; font-size: 22px; font-weight: 900; color: white; background: linear-gradient(135deg, #2f9e44, #2ecc71); border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(47, 158, 68, 0.4); transition: transform 0.2s; letter-spacing: 1px; }
-        #start-btn:active { transform: scale(0.95); }
-        .fade-out { opacity: 0; pointer-events: none; }
 
-        /* FIXED HEADER WITH TABS */
+        /* SPLASH SCREEN */
+        #splash-screen { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #181818; z-index: 9999; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            transition: opacity 0.5s ease-out; 
+        }
+        #splash-img { 
+            max-width: 95%; max-height: 80vh; border-radius: 12px; 
+            box-shadow: 0 0 25px rgba(0,0,0,0.7); margin-bottom: 25px; object-fit: contain; 
+        }
+        #start-btn { 
+            padding: 15px 50px; font-size: 20px; font-weight: 900; color: white; 
+            background: linear-gradient(135deg, #2f9e44, #2ecc71); /* Green for History */
+            border: none; border-radius: 50px; cursor: pointer; 
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4); 
+            transition: transform 0.2s; letter-spacing: 1px; text-transform: uppercase;
+            pointer-events: auto; z-index: 10001;
+        }
+        #start-btn:active { transform: scale(0.95); }
+        
+        /* HEADER */
         #header-area {
             position: fixed; top: 0; left: 0; width: 100%; 
             background: #000; border-bottom: 2px solid #333; 
             z-index: 2000; display: flex; flex-direction: column; align-items: center;
             padding-bottom: 10px;
         }
-
         #app-title {
             color: #fff; font-size: 16px; font-weight: 900; 
             margin: 10px 0; letter-spacing: 1px; text-transform: uppercase;
         }
 
-        /* TOGGLE SWITCH STYLE */
+        /* TABS */
         .toggle-container {
             display: flex; background: #1e1e1e; border-radius: 30px; 
             padding: 4px; border: 1px solid #333;
@@ -38,45 +62,52 @@
             font-size: 13px; font-weight: bold; cursor: pointer; 
             color: #888; background: transparent; transition: all 0.2s;
         }
-        .toggle-btn.active {
-            color: #000; box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        #btn-listen.active { background: #4dabf7; } /* Blue for Listen */
-        #btn-quiz.active { background: #e056fd; }   /* Pink for Quiz */
+        .toggle-btn.active { color: #000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        #btn-listen.active { background: #4dabf7; } 
+        #btn-quiz.active { background: #e056fd; }   
 
-        /* CONTENT AREAS */
-        #content-listen { padding: 20px; padding-top: 130px; max-width: 600px; margin: 0 auto; display: block; }
+        /* PLAYER ROW */
+        #audio-controls { width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: 10px; }
+        #now-playing { color: #4dabf7; font-size: 12px; margin-bottom: 5px; font-weight: bold; text-align: center; }
+        .player-row { display: flex; align-items: center; justify-content: center; gap: 15px; width: 95%; max-width: 600px; }
+        #player { flex-grow: 1; height: 50px; outline: none; }
+
+        /* NEON SNAIL STYLES */
+        #btn-snail {
+            background: #111; border: 4px solid #ff0033; border-radius: 15px;
+            width: 80px; height: 60px; font-size: 40px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s ease; opacity: 1; filter: none;
+            box-shadow: 0 0 10px #ff0033, inset 0 0 5px rgba(255, 0, 51, 0.3);
+            padding: 0;
+        }
+        #btn-snail:hover { background: #222; transform: scale(1.05); }
+        #btn-snail.active {
+            border-color: #39ff14; background: #0a1f0a; 
+            box-shadow: 0 0 20px #39ff14, inset 0 0 10px rgba(57, 255, 20, 0.4); 
+            transform: scale(1.1);
+        }
+
+        /* CONTENT ZONES */
+        #content-listen { padding: 20px; padding-top: 170px; max-width: 600px; margin: 0 auto; display: block; }
         #content-quiz { display: none; width: 100%; height: 100vh; padding-top: 100px; box-sizing: border-box; }
-        
         iframe { width: 100%; height: 100%; border: none; background: #121212; }
 
-        /* LISTENING APP STYLES */
-        #now-playing { color: #4dabf7; font-size: 12px; margin-bottom: 5px; font-weight: bold; text-align: center; }
-        #player { width: 90%; height: 35px; outline: none; margin-bottom: 5px; }
+        /* CARDS */
         .search { width: 100%; padding: 15px; font-size: 16px; border-radius: 12px; border: 1px solid #333; background: #1e1e1e; color: white; margin-bottom: 20px; box-sizing: border-box; }
-        
         .card { background: #1e1e1e; padding: 15px; margin-bottom: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; }
-        
-        /* ZOOM CURSOR */
         .img-container { text-align: center; flex-shrink: 0; cursor: zoom-in; }
-        
         .card img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; background: #333; border: 2px solid #555; }
         .info { flex-grow: 1; }
         .name { font-weight: bold; display: block; margin-bottom: 10px; font-size: 17px; text-transform: capitalize; color: #fff; }
         .btn-container { display: flex; gap: 8px; flex-wrap: wrap; }
-        
-        button.play-btn { 
-            border: none; padding: 4px 14px; border-radius: 8px; 
-            font-size: 12px; font-weight: 700; cursor: pointer; color: white; 
-            display: flex; align-items: center; gap: 10px; 
-        }
+        button.play-btn { border: none; padding: 4px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; color: white; display: flex; align-items: center; gap: 10px; }
         
         /* COLORS */
-        .btn-uk { background: #d63031; } /* Red */
-        .btn-us { background: #0984e3; } /* Blue */
-        .btn-generic { background: #2f9e44; } /* Green */
-
-        /* ZOOM MODAL */
+        .btn-uk { background: #d63031; } .btn-us { background: #0984e3; } 
+        .btn-generic { background: #2f9e44; } .btn-male { background: #007AFF; } .btn-female { background: #e056fd; } 
+        
+        /* MODAL */
         #modal { display: none; position: fixed; z-index: 9998; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); align-items: center; justify-content: center; flex-direction: column; }
         #modal img { max-width: 95%; max-height: 80vh; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
         #close-btn { color: white; font-size: 18px; margin-top: 20px; padding: 10px 30px; background: #333; border-radius: 30px; cursor: pointer; border: 1px solid #555; }
@@ -86,20 +117,22 @@
 
     <div id="splash-screen">
         <img src="welcome-poster.png" alt="Çalışma Rehberi" id="splash-img" onerror="this.src='https://via.placeholder.com/400x600?text=Poster+Not+Found'">
-        <button id="start-btn" onclick="startApp()">BAŞLA 🚀</button>
+        <button id="start-btn" onclick="startApp()">BAŞLA 🏛️</button>
     </div>
 
     <div id="header-area">
         <div id="app-title">🏛️ Historic People</div>
-        
         <div class="toggle-container">
             <button id="btn-listen" class="toggle-btn active" onclick="switchTab('listen')">🎧 Listen</button>
             <button id="btn-quiz" class="toggle-btn" onclick="switchTab('quiz')">🧠 Quiz</button>
         </div>
-
-        <div id="audio-controls" style="width:100%; display:flex; flex-direction:column; align-items:center; margin-top:10px;">
+        
+        <div id="audio-controls">
             <div id="now-playing">Select a track</div>
-            <audio id="player" controls controlsList="nodownload"></audio>
+            <div class="player-row">
+                <audio id="player" controls controlsList="nodownload"></audio>
+                <button id="btn-snail" onclick="toggleSnail()" title="Emergency Slow Mode">🐌</button>
+            </div>
         </div>
     </div>
 
@@ -118,155 +151,165 @@
         <div id="close-btn">Close Image</div>
     </div>
 
-<script>
-    /* --- SPLASH SCREEN LOGIC --- */
-    function startApp() {
-        const splash = document.getElementById('splash-screen');
-        splash.classList.add('fade-out');
-        setTimeout(() => { splash.style.display = 'none'; }, 500); // Remove after fade
-    }
-
-    /* --- TAB SWITCHING LOGIC --- */
-    function switchTab(mode) {
-        const listenContent = document.getElementById('content-listen');
-        const quizContent = document.getElementById('content-quiz');
-        const audioControls = document.getElementById('audio-controls');
+    <script>
+        // 1. HARDCODED REPO DETAILS (Fail-Safe)
+        const USER = "dogierez01";
+        const REPO = "historic-people"; 
+        const BRANCH = "main";
         
-        const btnListen = document.getElementById('btn-listen');
-        const btnQuiz = document.getElementById('btn-quiz');
+        const API_URL = `https://api.github.com/repos/${USER}/${REPO}/contents/`;
+        const RAW_URL = `https://raw.githubusercontent.com/${USER}/${REPO}/${BRANCH}/`;
 
-        if (mode === 'listen') {
-            listenContent.style.display = 'block';
-            quizContent.style.display = 'none';
-            audioControls.style.display = 'flex'; 
-            btnListen.classList.add('active');
-            btnQuiz.classList.remove('active');
-        } else {
-            listenContent.style.display = 'none';
-            quizContent.style.display = 'block';
-            audioControls.style.display = 'none'; 
-            btnListen.classList.remove('active');
-            btnQuiz.classList.add('active');
+        // 2. DOM ELEMENTS
+        const list = document.getElementById("list");
+        const status = document.getElementById("status");
+        const player = document.getElementById("player");
+        const nowPlaying = document.getElementById("now-playing");
+        const modal = document.getElementById("modal");
+        const modalImg = document.getElementById("modal-img");
+
+        // 3. INIT FUNCTION
+        async function init() {
+            try {
+                // Fetch File List
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error("Could not find files. Check Repo Name.");
+                
+                const files = await response.json();
+                let people = {};
+
+                // Process Files
+                files.forEach(file => {
+                    let name = file.name.toLowerCase();
+                    // Exclude the poster and system files
+                    if (name.includes(".html") || name.includes(".css") || name.startsWith(".") || name === "welcome-poster.png") return;
+                    
+                    let baseName = name
+                        .replace(/\.(mp3|wav|jpg|png|jpeg)$/, "") 
+                        .replace(/ female| male| uk| us| bio/gi, "") 
+                        .trim();
+
+                    if (!people[baseName]) people[baseName] = { name: baseName, audios: [], img: "" };
+
+                    if (name.includes(".wav") || name.includes(".mp3")) {
+                        people[baseName].audios.push(file.name);
+                    } else if (name.includes(".jpg") || name.includes(".png")) {
+                        people[baseName].img = file.name;
+                    }
+                });
+
+                let sortedPeople = Object.values(people)
+                    .filter(p => p.audios.length > 0 || p.img)
+                    .sort((a, b) => a.name.localeCompare(b.name));
+
+                render(sortedPeople);
+                
+                // Hide Loading Status
+                if(status) status.style.display = 'none';
+
+            } catch (error) { 
+                if(status) status.innerText = "Error: " + error.message; 
+            }
         }
-    }
 
-    /* --- GITHUB REPO LOGIC --- */
-    const USER = "dogierez01";
-    const REPO = "historic-people"; 
-    const BRANCH = "main";
-    const API_URL = `https://api.github.com/repos/${USER}/${REPO}/contents/`;
-    const RAW_URL = `https://raw.githubusercontent.com/${USER}/${REPO}/${BRANCH}/`;
-
-    const list = document.getElementById("list");
-    const status = document.getElementById("status");
-    const player = document.getElementById("player");
-    const nowPlaying = document.getElementById("now-playing");
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modal-img");
-
-    async function init() {
-        try {
-            const response = await fetch(API_URL);
-            if (!response.ok) throw new Error("Repo not found.");
-            
-            const files = await response.json();
-            let people = {};
-
-            files.forEach(file => {
-                let name = file.name.toLowerCase();
-                // Exclude the poster image from the list
-                if (name.includes(".html") || name.includes(".css") || name.startsWith(".") || name === "welcome-poster.png") return;
-
-                let baseName = name
-                    .replace(/\.(mp3|wav|jpg|png|jpeg)$/, "") 
-                    .replace(/ female| male| uk| us/g, "") 
-                    .trim();
-
-                if (!people[baseName]) people[baseName] = { name: baseName, audios: [], img: "" };
-
-                if (name.includes(".wav") || name.includes(".mp3")) {
-                    people[baseName].audios.push(file.name);
-                } else if (name.includes(".jpg") || name.includes(".png")) {
-                    people[baseName].img = file.name;
-                }
-            });
-
-            let sortedPeople = Object.values(people)
-                .filter(p => p.audios.length > 0 || p.img)
-                .sort((a, b) => a.name.localeCompare(b.name));
-
-            render(sortedPeople);
-            status.style.display = 'none';
-
-        } catch (error) { status.innerText = "Error: " + error.message; }
-    }
-
-    function render(items) {
-        list.innerHTML = items.map(p => {
-            p.audios.sort((a, b) => getSortScore(a) - getSortScore(b));
-            
-            return `
-            <div class="card">
-                <div class="img-container" onclick="openModal('${p.img ? RAW_URL + encodeURIComponent(p.img) : ''}')">
-                    <img src="${p.img ? RAW_URL + encodeURIComponent(p.img) : 'https://via.placeholder.com/70?text=?'}" onerror="this.src='https://via.placeholder.com/70?text=?'">
-                </div>
-                <div class="info">
-                    <span class="name">${p.name}</span>
-                    <div class="btn-container">
-                        ${p.audios.map(audio => makeButton(audio)).join('')}
+        // 4. RENDER FUNCTION
+        function render(items) {
+            list.innerHTML = items.map(p => {
+                p.audios.sort((a, b) => getSortScore(a) - getSortScore(b));
+                return `
+                <div class="card">
+                    <div class="img-container" onclick="openModal('${p.img ? RAW_URL + encodeURIComponent(p.img) : ''}')">
+                        <img src="${p.img ? RAW_URL + encodeURIComponent(p.img) : 'https://via.placeholder.com/70?text=?'}" onerror="this.src='https://via.placeholder.com/70?text=?'">
                     </div>
-                </div>
-            </div>`;
-        }).join('');
-    }
+                    <div class="info">
+                        <span class="name">${p.name}</span>
+                        <div class="btn-container">${p.audios.map(audio => makeButton(audio)).join('')}</div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
 
-    function getSortScore(filename) {
-        let lower = filename.toLowerCase();
-        if (/(^|\W)uk(\W|$)/.test(lower)) return 10;
-        if (/(^|\W)us(\W|$)/.test(lower) && lower.includes("male")) return 20;
-        if (/(^|\W)us(\W|$)/.test(lower) && lower.includes("female")) return 30;
-        return 100;
-    }
+        // 5. HELPER FUNCTIONS
+        function getSortScore(filename) {
+            let lower = filename.toLowerCase();
+            if (/(^|\W)uk(\W|$)/.test(lower)) return 10;
+            if (/(^|\W)us(\W|$)/.test(lower) && lower.includes("male")) return 20;
+            if (/(^|\W)us(\W|$)/.test(lower) && lower.includes("female")) return 30;
+            return 100;
+        }
 
-    function makeButton(filename) {
-        let lower = filename.toLowerCase();
-        let flag = "";
-        let text = "Play";
-        let css = "btn-generic"; 
+        function makeButton(filename) {
+            let lower = filename.toLowerCase();
+            let flag = ""; let text = "Play"; let css = "btn-generic"; 
+            if (/(^|\W)uk(\W|$)/.test(lower)) { flag = "🇬🇧"; css = "btn-uk"; }
+            else if (/(^|\W)us(\W|$)/.test(lower)) { flag = "🇺🇸"; css = "btn-us"; }
+            if (lower.includes("female")) { text = "Female"; if (!flag) css = "btn-female"; } 
+            else if (lower.includes("male")) { text = "Male"; if (!flag) css = "btn-male"; }
+            
+            let content = "";
+            if (flag) {
+                // Big Flag Mode
+                content += `<span style="font-size: 3.0em; line-height: 0.8;">${flag}</span>`;
+                content += `<span>${text}</span>`;
+            } else {
+                content = text;
+            }
 
-        if (/(^|\W)uk(\W|$)/.test(lower)) { flag = "🇬🇧"; css = "btn-uk"; }
-        else if (/(^|\W)us(\W|$)/.test(lower)) { flag = "🇺🇸"; css = "btn-us"; }
+            return `<button class="play-btn ${css}" onclick="play('${filename}')">${content}</button>`;
+        }
 
-        if (lower.includes("female")) text = "Female";
-        else if (lower.includes("male")) text = "Male";
+        function openModal(src) { if(src && !src.includes("placeholder")) { modal.style.display = "flex"; modalImg.src = src; } }
+        function closeModal() { modal.style.display = "none"; }
+        
+        // 6. PLAYER LOGIC
+        let isSlowMode = false;
+        function toggleSnail() {
+            const btn = document.getElementById('btn-snail');
+            isSlowMode = !isSlowMode;
+            if(isSlowMode) {
+                if(player) player.playbackRate = 0.9;
+                btn.classList.add('active');
+            } else {
+                if(player) player.playbackRate = 1.0;
+                btn.classList.remove('active');
+            }
+        }
 
-        let content = "";
-        if (flag) content += `<span style="font-size: 3.0em; line-height: 0.8;">${flag}</span>`;
-        content += `<span>${text}</span>`;
+        function play(file) { 
+            player.src = RAW_URL + encodeURIComponent(file); 
+            player.playbackRate = isSlowMode ? 0.9 : 1.0;
+            player.play(); 
+            nowPlaying.innerText = file.replace(/_/g, " "); 
+        }
 
-        return `<button class="play-btn ${css}" onclick="play('${filename}')">${content}</button>`;
-    }
+        // 7. TAB LOGIC
+        function switchTab(mode) {
+            const listenContent = document.getElementById('content-listen');
+            const quizContent = document.getElementById('content-quiz');
+            const audioControls = document.getElementById('audio-controls'); 
+            const btnListen = document.getElementById('btn-listen');
+            const btnQuiz = document.getElementById('btn-quiz');
 
-    function openModal(src) { 
-        if(src && !src.includes("placeholder")) { 
-            modal.style.display = "flex"; 
-            modalImg.src = src; 
-        } 
-    }
-    function closeModal() { modal.style.display = "none"; }
+            if (mode === 'listen') {
+                listenContent.style.display = 'block';
+                quizContent.style.display = 'none';
+                audioControls.style.display = 'flex'; 
+                btnListen.classList.add('active');
+                btnQuiz.classList.remove('active');
+            } else {
+                listenContent.style.display = 'none';
+                quizContent.style.display = 'block';
+                audioControls.style.display = 'none'; 
+                btnListen.classList.remove('active');
+                btnQuiz.classList.add('active');
+            }
+        }
 
-    function play(file) { 
-        player.src = RAW_URL + encodeURIComponent(file); 
-        player.play();
-        nowPlaying.innerText = file.replace(/_/g, " "); 
-    }
-    
-    function filter(q) { 
-        let cards = document.querySelectorAll('.card');
-        cards.forEach(c => c.style.display = c.innerText.toLowerCase().includes(q.toLowerCase()) ? 'flex' : 'none');
-    }
-    
-    init();
-</script>
+        function filter(q) { document.querySelectorAll('.card').forEach(c => c.style.display = c.innerText.toLowerCase().includes(q.toLowerCase()) ? 'flex' : 'none'); }
+
+        // 8. START THE ENGINE
+        init();
+
+    </script>
 </body>
 </html>
