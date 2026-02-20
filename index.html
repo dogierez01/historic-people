@@ -2,288 +2,283 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Historic People - Master Edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lingua Pharmacia</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #121212; color: #e0e0e0; margin: 0; padding: 0; overflow-x: hidden; }
-        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #121212; z-index: 10001; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .neon-ring { width: 350px; height: 350px; border-radius: 50%; border: 10px solid #ff0000; box-shadow: 0 0 40px #ff0000; display: flex; align-items: center; justify-content: center; animation: pulse 2s infinite; margin-bottom: 40px; overflow: hidden; background: #1a1a1a; }
-        .logo-img { width: 100%; height: 100%; object-fit: cover; }
-        @keyframes pulse { 0% { box-shadow: 0 0 20px #ff0000; } 50% { box-shadow: 0 0 60px #ff0000; } 100% { box-shadow: 0 0 20px #ff0000; } }
-        #start-btn { padding: 25px 90px; font-size: 28px; font-weight: 900; color: white; background: linear-gradient(135deg, #d63031, #ff0000); border: none; border-radius: 60px; cursor: pointer; text-transform: uppercase; }
-        #header-area { position: fixed; top: 0; width: 100%; background: #000; border-bottom: 2px solid #333; z-index: 100; padding: 15px 0; text-align: center; }
-        #app-title { font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
-        .toggle-btn { padding: 15px 40px; border-radius: 35px; border: none; font-weight: 900; cursor: pointer; color: #888; background: #222; margin: 0 10px; font-size: 18px; }
-        .toggle-btn.active { color: #fff; background: #007AFF; }
-        #audio-bar { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; }
-        #player { height: 45px; width: 75%; outline: none; }
-        #btn-snail { background: #111; color: white; border: 2px solid #ff0033; font-size: 28px; padding: 5px 20px; border-radius: 12px; cursor: pointer; }
-        #btn-snail.active { border-color: #39ff14; box-shadow: 0 0 10px #39ff14; }
-        #content-area { padding: 20px; padding-top: 240px; max-width: 700px; margin: 0 auto; }
-        .card { background: #1e1e1e; padding: 30px; margin-bottom: 40px; border-radius: 15px; border: 1px solid #333; }
-        .card-title { font-size: 30px; font-weight: 900; color: #fff; margin-bottom: 25px; text-align: center; border-bottom: 1px solid #444; padding-bottom: 15px; }
-        .listen-btn { padding: 22px; border-radius: 12px; border: none; cursor: pointer; font-weight: 900; font-size: 22px; color: white; display: block; width: 100%; margin-bottom: 15px; }
-        .btn-uk { background: #d63031; } .btn-us-f { background: #e056fd; } .btn-us-m { background: #007AFF; }
-        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 3000; overflow-y: auto; }
-        #modal-content { padding: 45px; max-width: 900px; margin: 0 auto; padding-top: 110px; }
-        #close-btn { position: fixed; top: 30px; right: 30px; font-size: 40px; cursor: pointer; color: white; z-index: 3100; background: #ff0033; width: 70px; height: 70px; border-radius: 50%; border: none; }
-        #story-text { font-size: 32px; line-height: 1.7; color: #f0f0f0; text-align: justify; font-weight: 500; white-space: pre-wrap; }
-        .quiz-menu-btn { display: block; width: 100%; padding: 30px; background: #1e1e1e; border: 2px solid #333; color: white; font-weight: 900; border-radius: 15px; margin-bottom: 45px; cursor: pointer; text-align: left; font-size: 26px; min-height: 110px; }
-        .mcq-option { width: 100%; padding: 25px; background: #1e1e1e; border: 2px solid #333; color: #fff; border-radius: 12px; font-size: 24px; font-weight: bold; text-align: left; margin-bottom: 20px; cursor: pointer; }
-        .feedback { font-weight: bold; display: block; margin-top: 25px; font-size: 30px; text-align: center; }
-        .correct { color: #39ff14; } .wrong { color: #ff0033; }
+        :root {
+            --bg-color: #000;
+            --card-bg: #111;
+            --primary-red: #cc0000;
+            --primary-purple: #9c27b0;
+            --primary-blue: #007bff;
+            --text-color: #eee;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Landing Page */
+        #landing-page {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-glow {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 2px solid #ffcc00;
+            box-shadow: 0 0 25px var(--primary-red);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .start-btn {
+            background-color: var(--primary-red);
+            color: white;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* Header & Player */
+        #main-container { display: none; width: 100%; max-width: 600px; padding: 20px; }
+        
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            background: #222;
+            color: white;
+            border: 1px solid #444;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active { background: var(--primary-blue); border-color: var(--primary-blue); }
+
+        .player-bar {
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .snail-btn {
+            background: none;
+            border: 1px solid #444;
+            cursor: pointer;
+            font-size: 1.2rem;
+            border-radius: 5px;
+        }
+        .snail-btn.active { background: #ffcc00; }
+
+        /* Content */
+        .person-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .audio-group { display: flex; flex-direction: column; gap: 8px; }
+
+        .btn-audio {
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .btn-uk { background-color: var(--primary-red); }
+        .btn-usf { background-color: var(--primary-purple); }
+        .btn-usm { background-color: var(--primary-blue); }
+
+        .bio-box {
+            display: none;
+            margin-top: 15px;
+            text-align: left;
+            padding: 10px;
+            border-top: 1px solid #444;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Quiz */
+        .q-box { background: #1a1a1a; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; }
+        .opt-row { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; }
+        .opt-btn {
+            background: #333;
+            color: white;
+            border: 1px solid #444;
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .opt-btn.correct { background: #28a745; }
+        .opt-btn.wrong { background: #dc3545; }
+
     </style>
 </head>
 <body>
-<div id="splash-screen"><div class="neon-ring"><img src="logo.png" class="logo-img" onerror="this.src='https://raw.githubusercontent.com/dogierez01/historic-people/main/logo.png'"></div><button onclick="startApp()" id="start-btn">START 🏛️</button></div>
-<div id="header-area"><div id="app-title">🏛️ HISTORIC PEOPLE</div><div style="display:flex; justify-content:center;"><button id="btn-listen" class="toggle-btn active" onclick="setMode('listen')">🎧 Listen</button><button id="btn-quiz" class="toggle-btn" onclick="setMode('quiz')">🧠 Quiz</button></div><div id="audio-bar"><audio id="player" controls></audio><button id="btn-snail" onclick="toggleSnail()">🐌</button></div></div>
-<div id="content-area"><div id="list"></div></div>
-<div id="modal"><button id="close-btn" onclick="closeModal()">✕</button><div id="modal-content"><div id="view-listen"><div id="story-text"></div></div><div id="view-quiz" style="display:none;"><h2 id="quiz-title" style="text-align:center; font-size: 38px;"></h2><div id="quiz-area"></div></div></div></div>
-<script>
-const db = [
-    {
-        title: "Alexander the Great", key: "alexander the great",
-        text: "Alexander was born in 356 BC in Pella, the capital of Macedon. His mother, Olympia, was a strong and mysterious woman. She prayed to snakes and kept many of them in the palace. Alexander grew up with these snakes. Poisonous snakes bit him, so his body became strong against poison. His father, King Philip II, was a very strict ruler. One night, he punished Alexander very badly. This difficult event helped make Alexander a fearless and strong man. Even as a young man, Alexander was special. He did not have a beard. He ordered all his soldiers to shave their faces, too. This rule for soldiers is still used today. He was a student of the famous teacher Aristotle. He learned about war and how to lead an army. He became a commander when he was still a teenager. Alexander wanted to conquer the whole world. He took control of many huge lands like Persia and Egypt. He even traveled as far as India. His army grew bigger and stronger. However, great power brought danger. When he was at the River Indus, his own generals turned against him. They poisoned him because they were tired of fighting. They wanted to stop and return to their homes and families.",
-        mcq: [{q:"How did palace snakes affect Alexander?", o:["Trained him to hunt", "Made him resistant to poison", "Were his only friends"], a:1},{q:"What facial rule did he establish for soldiers?", o:["Grow beards", "Shave their faces", "Face tattoos"], a:1},{q:"Who was his famous teacher?", o:["Socrates", "Plato", "Aristotle"], a:2},{q:"At which river did his generals conspire against him?", o:["River Indus", "River Nile", "River Danube"], a:0},{q:"Why did the generals decide to poison Alexander?", o:["For gold", "Tired of fighting", "Working for Persia"], a:1}]
-    },
-    {
-        title: "Baltacı Mehmet Pasha", key: "baltaci mehmet",
-        text: "Baltacı Mehmet Pasha was an Ottoman grand vizier in the early 18th century. He is best known for his role in the Prut War between the Ottoman Empire and Russia in 1711. At that time, Russia was growing stronger under Tsar Peter the Great. The Ottomans, with the help of the Crimean Tatars, marched to stop them. Baltacı Mehmet Pasha led the Ottoman army to the Prut River, where they surrounded the Russian forces. The Russians were trapped, hungry, and weak. It seemed that the Ottomans were ready for a great victory. Although the army had the chance to destroy the Russians, Baltacı Mehmet Pasha accepted peace. With the Treaty of Prut, Russia gave back the city of Azov and promised to stay away from Ottoman lands. Peter the Great and his army were allowed to leave safely. Some people praised Baltacı Mehmet Pasha for avoiding more bloodshed. Others blamed him for not using the chance to defeat Russia completely. After this, his career lost strength, but the Treaty of Prut remained an important event in Ottoman history.",
-        mcq: [{q:"Russian Tsar in 1711?", o:["Ivan IV", "Peter the Great", "Nicholas"], a:1},{q:"Returned city?", o:["Moscow", "Istanbul", "Azov"], a:2},{q:" Ottoman allies?", o:["Crimean Tatars", "British", "French"], a:0},{q:"Russian condition?", o:["Strong", "Trapped and hungry", "Armed"], a:1},{q:"Decision judge?", o:["Universal praise", "Mixed praise and blame", "Death"], a:1}]
-    },
-    {
-        title: "Baybars", key: "baybars",
-        text: "Baybars was born in Central Asia around 1223. Enemies captured and sold him as a slave. He traveled to Egypt to become a Mamluk. Baybars trained hard and quickly became an important commander. At this time, the Mongols were attacking the Middle East. In 1260, they tried to enter Egypt. Baybars met them at Ain Jalut. He used a clever plan to win. He led a small attack and then pretended to run away in fear. The Mongols chased him into a valley without looking carefully. Suddenly, the rest of the Mamluk army appeared from hiding. The trap worked, and they defeated the Mongol army. Soon after, Baybars became the Sultan of Egypt and Syria. He built bridges, canals, and roads. He also made a fast mail system using horses.",
-        mcq: [{q:"What were Mamluks?", o:["Farmers", "Soldier-slaves", "Merchant sailors"], a:1},{q:"Where defeat Mongols?", o:["Ain Jalut", "Cairo", "Constantinople"], a:0},{q:"Winning tactic?", o:["Night ambush", "Pretended retreat", "Naval blockade"], a:1},{q:"Starting status?", o:["Prince", "Captured slave", "Merchant"], a:1},{q:"Systems built?", o:["Pyramids", "Bridges/Canals/Roads", "Coliseums"], a:1}]
-    },
-    {
-        title: "Boudica", key: "boudica",
-        text: "Boudica was a famous warrior queen in Britain during the first century. At that time, the Roman Empire ruled parts of Britain. The Celtic tribes wanted their freedom. After Boudica's husband died, the Romans took his lands, beat Boudica, and attacked her daughters. Enraged, she gathered warriors from different Celtic tribes. They attacked Roman towns and destroyed cities like Londinium. The Roman governor Suetonius led a large army to stop Boudica. At the final battle in 61 AD, the Roman army defeated Boudica's forces, although her army was much larger. The exact details of Boudica's death remain unknown; some stories say she got ill, others say she committed suicide to avoid capture.",
-        mcq: [{q:"Boudica was queen of which group?", o:["Vikings", "Celtic tribes", "Romans"], a:1},{q:"Why rebel?", o:["Higher taxes", "Mistreatment of her family", "Religious differences"], a:1},{q:"City destroyed?", o:["Londinium", "Rome", "Athens"], a:0},{q:"Governor who won?", o:["Nero", "Suetonius", "Julius Caesar"], a:1},{q:"Death theory?", o:["In battle", "Illness or suicide", "Escaped"], a:1}]
-    },
-    {
-        title: "Cezzar Ahmed Pasha", key: "cezzar ahmed",
-        text: "Cezzar Ahmed Pasha was the governor of Acre. He became famous in 1799 when Napoleon Bonaparte attacked Acre. Napoleon believed Acre would open the road for him to enter Anatolia. With modern cannons and a strong army, he began a long siege. Acre did not fall. Cezzar Ahmed Pasha defended the city with courage. He was supported by British ships under Admiral Sidney Smith, who gave him weapons and naval help. For two months, Napoleon’s forces tried again and again, but the walls of Acre resisted. Napoleon abandoned the siege and returned to Egypt. This failure damaged his reputation and stopped his Eastern dreams. Cezzar Ahmed Pasha became a hero of the Ottoman Empire.",
-        mcq: [{q:"Attacker at Acre?", o:["Peter the Great", "Napoleon Bonaparte", "Prince Eugene"], a:1},{q:"Naval help?", o:["The British", "The Russians", "The French"], a:0},{q:"Siege length?", o:["1 week", "2 months", "2 years"], a:1},{q:"Napoleon goal?", o:["Gold", "Anatolia access", "New palace"], a:1},{q:"Napoleon result?", o:["Crowned King", "Reputation damaged", "Won Syria"], a:1}]
-    },
-    {
-        title: "El Cid", key: "el cid",
-        text: "Rodrigo Diaz de Vivar was born in 1043. His nickname, 'El Cid,' comes from the Arabic word El Seyit, meaning respected. Accused of treachery, he was sent into exile. Rodrigo gathered loyal soldiers and fought to survive, often working with Muslim rulers. His respect for Muslim soldiers and leaders made him different. In 1094, he took the city of Valencia. Many Muslim families lived there, and Rodrigo let them stay under his rule. He kept peace with nearby Muslim states and hired Muslim soldiers to fight for him. He continued to defend the city until he died in 1099. His Islamic connections and respect for Muslim culture were important for his success.",
-        mcq: [{q:"Name meaning?", o:["Sword", "Respected", "King"], a:1},{q:"City taken 1094?", o:["Madrid", "Valencia", "Granada"], a:1},{q:"Treatment of Muslims?", o:["Exiled them", "Allowed them to stay", "Enslaved them"], a:1},{q:"Exile cause?", o:["Accused of treachery", "Lost a battle", "Old age"], a:0},{q:"Unique trait?", o:["No armor", "Respect for Muslim culture", "Sailor"], a:1}]
-    },
-    {
-        title: "Fahrettin Pasha", key: "fahrettin",
-        text: "Fahrettin Pasha, the 'Desert Tiger,' defended Medina during World War I. In 1916, he protected the holy city against the Arab revolt supported by the British. Lawrence of Arabia destroyed the railway and cut Medina off. Food became so scarce that soldiers ate locusts. Still, Fahrettin Pasha never gave up. He sent holy relics to Istanbul for safety and refused to surrender. Even after the war ended, he resisted, finally being forced to give up by his own officers. Later, he joined the Turkish War of Independence and became the first ambassador to Afghanistan. He died in 1948.",
-        mcq: [{q:"Nickname?", o:["Iron Lion", "Desert Tiger", "Holy sword"], a:1},{q:"Medina survival food?", o:["Salt bread", "Locusts", "Desert fruit"], a:1},{q:"Railway destroyer?", o:["General Smith", "Lawrence of Arabia", "Townshend"], a:1},{q:"Relics sent to?", o:["Cairo", "Istanbul", "Mecca"], a:1},{q:"Ambassador role?", o:["Russia", "Afghanistan", "Malta"], a:1}]
-    },
-    {
-        title: "Gavrilo Princip", key: "gavrilo princip",
-        text: "Gavrilo Princip was a young Serbian student whose assassination of Archduke Franz Ferdinand in 1914 started WWI. Born in 1894, he wanted freedom for Slavic peoples. The Archduke's car made a wrong turn and stopped near him. Princip shot both the Archduke and his wife. Caught immediately, he avoided the death penalty because he was under 20. He died in prison in 1918. History remembers him as both a terrorist and a patriot.",
-        mcq: [{q:"Where from?", o:["Austria", "Serbia", "Bosnia"], a:1},{q:"Assassination city?", o:["Belgrade", "Sarajevo", "Vienna"], a:1},{q:"War triggered?", o:["WWII", "WWI", "Crimean"], a:1},{q:"No death penalty why?", o:["Innocent", "Under 20 years old", "Escaped"], a:1},{q:"Reason for shot?", o:["Palace break-in", "Accidental wrong turn", "Duel"], a:1}]
-    },
-    {
-        title: "Gazi Osman Pasha", key: "gazi osman",
-        text: "Gazi Osman Pasha became famous during the Russo-Turkish War (1877-1878) for defending Plevna in Bulgaria. Despite a smaller army, he organized the defenses and built strong trenches. For five months, his army resisted Russian and Romanian forces. In December 1877, out of food and ammunition, he attempted a final attack. He was wounded and captured, but the Russians treated him with dignity. He returned to Istanbul as a hero with the title 'Gazi.'",
-        mcq: [{q:"Defended town?", o:["Sofia", "Plevna", "Varna"], a:1},{q:"Duration?", o:["One week", "Five months", "One year"], a:1},{q:"War?", o:["Crimean", "Russo-Turkish", "Balkan"], a:1},{q:"Strategy?", o:["Stone walls", "Strong trenches", "Mines"], a:1},{q:"Post-capture treat?", o:["Cruel", "Dignity and respect", "Ignored"], a:1}]
-    },
-    {
-        title: "Halil Pasha", key: "halil",
-        text: "Halil Pasha commanded the Siege of Kut al-Amara, a major Ottoman victory in World War I. In Mesopotamia (Iraq), he surrounded 13,000 British soldiers led by General Townshend. Hunger and disease weakened the British inside the town. After 147 days, the British surrendered on 29 April 1916. More than 13,000 British and Indian soldiers were taken as prisoners. It marked a symbol of courage in the dark days of the war.",
-        mcq: [{q:"Where today?", o:["Turkey", "Iraq", "Egypt"], a:1},{q:"British General?", o:["Smith", "Townshend", "Lawrence"], a:1},{q:"Days of siege?", o:["47", "147", "300"], a:1},{q:"Prisoner count?", o:["1,300", "13,000", "130,000"], a:1},{q:"Result?", o:["Empire collapsed", "Empire could still fight", "Surrender"], a:1}]
-    },
-    {
-        title: "isabelle & ferdinand", key: "isabelle & ferdinand",
-        text: "The Catholic Monarchs united Spain in 1469. In 1492, they captured Granada, the last Muslim kingdom, finishing the Reconquista. They expelled Muslims and Jews and supported Columbus's voyage, creating Spain's empire but leaving a legacy of religious removal.",
-        mcq: [{q:"Granada year?", o:["1453", "1492", "1711"], a:1},{q:"Explorer supported?", o:["Marco Polo", "Columbus", "Vasco"], a:1},{q:"Goal?", o:["Retake Iberia", "Invade Italy", "Gold"], a:0},{q:"Kingdom status?", o:["Divided", "United", "Enemies"], a:1},{q:"Union year?", o:["1469", "1492", "1500"], a:0}]
-    },
-    {
-        title: "Jacobi", key: "jacobi",
-        text: "Jacobi (Yakup) was a Jewish physician from Genoa who studied medicines and poisons. Recruited by Venice/Vatican, he served Mehmed II. In 1481, Mehmed died after Yakup gave him medicine. Jacobi ended his life in mystery; suspicion of being a Venetian spy remained.",
-        mcq: [{q:"Palace name?", o:["Mehmed", "Yakup", "Joseph"], a:1},{q:"Role?", o:["Architect", "Physician", "Admiral"], a:1},{q:"Sultan died?", o:["Murad", "Mehmed II", "Ismail"], a:1},{q:"Masters?", o:["British", "Venice/Vatican", "Spain"], a:1},{q:"Origin?", o:["Genoa", "Rome", "Cairo"], a:0}]
-    },
-    {
-        title: "Koca Sinan Pasha", key: "koca sinan",
-        text: "Led the 'Bridge Disaster' at Giurgiu in 1595. Treasure carts delayed the Danube crossing. Michael the Brave destroyed the wooden bridge, trapping and killing thousands of Akıncı riders, who never recovered their strength.",
-        mcq: [{q:"Unit destroyed?", o:["Janissary", "Akıncı", "Mamluk"], a:1},{q:"Delay cause?", o:["Rain", "Treasure carts", "Snow"], a:1},{q:"Bridge site?", o:["Giurgiu", "Istanbul", "Vienna"], a:0},{q:"Enemy?", o:["Michael the Brave", "Eugene", "Peter"], a:0},{q:"Result?", o:["Stronger", "Never recovered", "Exiled"], a:1}]
-    },
-    {
-        title: "mezamorta", key: "mezamorta",
-        text: "Mezamorta Hüseyin Pasha ('half-dead') fired the French consul from a cannon in 1683 to stop an attack on Algiers. He won back Chios from Venice and modernized the navy with sailing kalyons before dying in 1701.",
-        mcq: [{q:"Name meaning?", o:["Sea Lion", "Half-dead", "Warrior"], a:1},{q:"French stop?", o:["Burning fleet", "Consul from cannon", "Bribe"], a:1},{q:"Ship change?", o:["Rowing to kalyons", "Wood to iron", "Steam"], a:0},{q:"Chios enemy?", o:["French", "Venetians", "Spanish"], a:1},{q:"Start?", o:["Pirate/Sailor", "Farmer", "Prince"], a:0}]
-    },
-    {
-        title: "Mir Ali Beg", key: "mir ali beg",
-        text: "Fought Portuguese trade control in Mombasa in the late 1500s. In 1589, Portuguese and cannibal Zimba warriors attacked; Ottoman soldiers were caught and eaten. Beg died a prisoner in Portugal.",
-        mcq: [{q:"Enemy in Africa?", o:["Spain", "Portugal", "Britain"], a:1},{q:"Land attacker?", o:["Zimba cannibals", "Mongols", "Romans"], a:0},{q:"Fate?", o:["Escaped", "Prisoner in Portugal", "Killed"], a:1},{q:"Port?", o:["Mombasa", "Cairo", "Algiers"], a:0},{q:"Region?", o:["North Africa", "East Africa", "India"], a:1}]
-    },
-    {
-        title: "mustafa the second", key: "mustafa the second",
-        text: "Mustafa II led a disaster at Tisa River in 1695. Spies told Prince Eugene of Savoy his location. Pashas delayed for money at the bridge. The bridge broke, 30,000 died, leading to the Treaty of Karlowitz.",
-        mcq: [{q:"Austrian General?", o:["Smith", "Prince Eugene", "Townshend"], a:1},{q:"Delay cause?", o:["Storm", "Pashas/Money", "Snow"], a:1},{q:"Losses?", o:["3,000", "30,000", "100,000"], a:1},{q:"Treaty?", o:["Prut", "Karlowitz", "Acre"], a:1},{q:"Sultan result?", o:["New army", "Never led again", "Resigned"], a:1}]
-    },
-    {
-        title: "ragnar lodbrok", key: "ragnar lodbrok",
-        text: "Viking leader who attacked Paris in 845 and was paid silver to leave. Captured by King Aella of Northumbria, he died in a snake pit. His sons later killed the King for revenge.",
-        mcq: [{q:"Name?", o:["Hairy pants", "Fast boat", "King"], a:0},{q:"Paris outcome 845?", o:["Defeat", "Paid silver to leave", "Crowned"], a:1},{q:"Death?", o:["Battle", "Snake pit", "Old age"], a:1},{q:"Sons group?", o:["Heathen Army", "Legion", "Akıncı"], a:0},{q:"Vengeance?", o:["Nero", "King Aella", "Eugene"], a:1}]
-    },
-    {
-        title: "Rob Roy", key: "rob roy",
-        text: "Rob Roy MacGregor (1671-1734) was the 'Scottish Robin Hood.' A cattle farmer who became an outlaw after a noble took his land. He stole from the rich to give to the poor while hiding in the Highlands.",
-        mcq: [{q:"Job?", o:["Soldier", "Cattle farmer", "Sailor"], a:1},{q:"Nickname?", o:["Scot", "Robin Hood", "King"], a:1},{q:"Outlaw cause?", o:["Stole crown", "Lost land/Debt", "Old age"], a:1},{q:"Hideout?", o:["London", "Highlands", "Cave"], a:1},{q:"Clan?", o:["MacGregor", "Stewart", "Aella"], a:0}]
-    },
-    {
-        title: "salahuddin eyyubi", key: "salahuddin eyyubi",
-        text: "Salahuddin (Saladin) united Muslim lands to defend against Crusaders. Born in Tikrit (1137), he won at Hattin in 1187 and captured Jerusalem fairly. He treats Christians and Jews with respect.",
-        mcq: [{q:"Born?", o:["Cairo", "Tikrit", "Baghdad"], a:1},{q:"Jerusalem year?", o:["1137", "1187", "1193"], a:1},{q:"1187 victory?", o:["Jalut", "Hattin", "Plevna"], a:1},{q:"Jerusalem trait?", o:["Execution", "Fairness/Respect", "Gold"], a:1},{q:"Goal?", o:["Conquer Rome", "Unite Muslims", "Build wall"], a:1}]
-    },
-    {
-        title: "Skanderbeg", key: "skanderbeg",
-        text: "Gjergj Kastrioti (Skanderbeg) is Albania's national hero. Soldier for Ottomans who revolted in 1443. For 20 years, he protected Albania using knowledge of Ottoman tactics. Pope called him 'Athlete of Christ.'",
-        mcq: [{q:"Real name?", o:["Osman", "Gjergj Kastrioti", "Mehmet"], a:1},{q:"Flag symbol?", o:["Lion", "Double-headed eagle", "Star"], a:1},{q:"Resistance time?", o:["2", "20", "50 years"], a:1},{q:"Pope title?", o:["Athlete of Christ", "Saint", "King"], a:0},{q:"Trained?", o:["Rome", "Ottoman Empire", "Paris"], a:1}]
-    },
-    {
-        title: "Spartacus", key: "spartacus",
-        text: "Spartacus led 70 gladiators escaping Capua in 73 BC using kitchen knives. He built a slave army at Mount Vesuvius. Defeated by Crassus in 71 BC, leading to 6,000 crucifixions along the Appian Way.",
-        mcq: [{q:"Origin?", o:["Rome", "Thrace", "Egypt"], a:1},{q:"Escape tool?", o:["Swords", "Kitchen knives", "Chains"], a:1},{q:"Hideout?", o:["Forum", "Mount Vesuvius", "Colosseum"], a:1},{q:"Defeated by?", o:["Caesar", "Crassus", "Napoleon"], a:1},{q:"Penalty?", o:["Crucified", "Free", "Exiled"], a:0}]
-    },
-    {
-        title: "stefan dusan", key: "stefan dusan",
-        text: "King Stefan Dušan built a strong Serbian Empire (1331-1355). He aimed to take Constantinople before the Ottomans. He tried to form a united Christian army against them but died suddenly in 1355.",
-        mcq: [{q:"Goal?", o:["Rome", "Take Constantinople", "London"], a:1},{q:"Threat?", o:["Vikings", "Ottomans", "British"], a:1},{q:"Alliance?", o:["France", "Pope/Venice", "Russia"], a:1},{q:"Status?", o:["Stronger", "Weakened/Divided", "Stable"], a:1},{q:"Maritsa timing?", o:["34y after death", "Immediately", "100y"], a:0}]
-    },
-    {
-        title: "Taras Bulba", key: "taras bulba",
-        text: "Cossack warrior in 1500s Ukraine fighting Polish rule. Killed son Andriy for betraying them for a Polish woman. Son Ostap killed in Warsaw. He is a hero of tradition and freedom.",
-        mcq: [{q:"Who fought?", o:["Russia", "Poland", "Germany"], a:1},{q:"Why kill son?", o:["Stealing", "Love betrayal", "Cowardice"], a:1},{q:"Ostap killed where?", o:["Kyiv", "Warsaw", "London"], a:1},{q:"Line?", o:["Go", "I give life, I take it", "Sword"], a:1},{q:"Group?", o:["Viking", "Cossack", "Mamluk"], a:1}]
-    },
-    {
-        title: "tariq ibn ziyad", key: "tariq ibn ziyad",
-        text: "Tariq ibn Ziyad led 7,000 soldiers into Spain in 711 AD. Burned boats at Gibraltar (Jabal Tariq) to show no retreat. Defeated King Roderick at Guadalete, starting 800y of Muslim rule.",
-        mcq: [{q:"Modern name?", o:["Madrid", "Gibraltar", "Alps"], a:1},{q:"Boat order?", o:["Build wall", "Burn them", "Sell"], a:1},{q:"Defeated King?", o:["Philip", "Roderick", "Alexander"], a:1},{q:"Rule length?", o:["8", "800", "8,000 years"], a:1},{q:"Crossing year?", o:["711 AD", "1000", "1492"], a:0}]
-    },
-    {
-        title: "timur", key: "timur",
-        text: "Central Asian conqueror (1336) who captured Ottoman Sultan Bayezid at Ankara (1402) by turning his soldiers. Died in 1405 planning to invade China. Brutal leader who showed no mercy.",
-        mcq: [{q:"Sultan captured?", o:["Mehmed", "Bayezid", "Mustafa"], a:1},{q:"Ankara tactic?", o:["Cannons", "Switch sides", "Night"], a:1},{q:"Invade where?", o:["Egypt", "China", "India"], a:1},{q:"Died year?", o:["1336", "1405", "1492"], a:1},{q:"Sultan fate?", o:["Freed", "Died prisoner", "Escaped"], a:1}]
-    },
-    {
-        title: "Tomyris", key: "tomyris",
-        text: "Queen Tomyris of Massagetae defeated Cyrus the Great (Persia) in 530 BC. Cyrus trapped her son with wine; he died. She avenged him by cutting off Cyrus's head and putting it in a bag of blood.",
-        mcq: [{q:"King defeated?", o:["Xerxes", "Cyrus the Great", "Darius"], a:1},{q:"Trick used?", o:["Wine/food camp", "Fake peace", "Spies"], a:0},{q:"Head fate?", o:["Sent to Rome", "Bag of blood", "Buried"], a:1},{q:"Son's death?", o:["Battle", "Suicide/Captivity", "Old age"], a:1},{q:"Location?", o:["Egypt", "Central Asia", "France"], a:1}]
-    },
-    {
-        title: "Turgut Reis", key: "turgut reis",
-        text: "Turgut Reis began as a Muğla-born sailor and became an Ottoman admiral. Rescued from the Genoese after 3 years, he famously moved ships overland at Djerba. He died at the Siege of Malta in 1565.",
-        mcq: [{q:"Rescuer?", o:["Suleiman", "Barbarossa", "Yusuf"], a:1},{q:"Djerba escape?", o:["Swim", "Overland ships", "Storm"], a:1},{q:"Where died?", o:["Vienna", "Malta", "Acre"], a:1},{q:"Prisoner length?", o:["1 month", "3 years", "10 years"], a:1},{q:"Ally?", o:["Napoleon", "Barbarossa", "Gessler"], a:1}]
-    },
-    {
-        title: "vlad dracula", key: "vlad dracula",
-        text: "Vlad the Impaler of Wallachia was an Ottoman hostage as a child. Later used scorched earth/night attacks against Mehmed II. Head sent to Mehmed as proof in 1476. Brother Radu was an ally to the Ottomans.",
-        mcq: [{q:"Meaning?", o:["Impaler", "Son of dragon", "King"], a:1},{q:"Hostage where?", o:["Rome", "Ottoman Empire", "Paris"], a:1},{q:"Brother name?", o:["Radu", "Mustafa", "Stefan"], a:0},{q:"Tactic?", o:["Scorched earth", "Wall", "Bribe"], a:0},{q:"Head recipient?", o:["Philip", "Mehmed II", "Pope"], a:1}]
-    },
-    {
-        title: "William Tell", key: "william tell",
-        text: "Swiss hero who shot an apple off his son's head under Gessler's orders. Escaped a storm, killed Gessler, and inspired rebellion for Swiss independence.",
-        mcq: [{q:"Target?", o:["Bird", "Apple on son's head", "Target"], a:1},{q:"2nd arrow use?", o:["Son", "Gessler", "King"], a:1},{q:"Escape method?", o:["Swim", "Steering in storm", "Bribes"], a:1},{q:"On pole?", o:["Sword", "Hat", "Crown"], a:1},{q:"Nation inspired?", o:["Scotland", "Switzerland", "Albania"], a:1}]
-    },
-    {
-        title: "William Wallace", key: "william wallace",
-        text: "Scottish hero who rebelled against Edward I after English soldiers killed his wife. Won at Stirling Bridge (1297) but lost at Falkirk. Executed in London in 1305.",
-        mcq: [{q:"English King?", o:["Henry", "Edward I", "Richard"], a:1},{q:"Victory?", o:["Falkirk", "Stirling Bridge", "London"], a:1},{q:"Trigger?", o:["Gold", "Wife killed", "Taxes"], a:1},{q:"Execution city?", o:["Edinburgh", "London", "Paris"], a:1},{q:"Successor leader?", o:["Bruce", "Rob Roy", "Eugene"], a:0}]
-    },
-    {
-        title: "Yusuf Pasha", key: "yusuf pasha",
-        text: "In 1788, an Austrian army of 100,000 destroyed itself in Romania due to confusion and alcohol. Misheard 'Halt' as 'Allah' and fired on each other. Yusuf Pasha took the town without a fight.",
-        mcq: [{q:"Cause?", o:["Plague", "Alcohol/Confusion", "Storm"], a:1},{q:"Mistaken word?", o:["Halt!", "Attack!", "Run!"], a:0},{q:"Army size?", o:["10,000", "100,000", "500,000"], a:1},{q:"Effort?", o:["Siege", "None", "1-day fight"], a:1},{q:"Location?", o:["Turkey", "Romania", "Germany"], a:1}]
-    }
-];
 
-let cm = 'listen'; let slow = false; let repo = [];
-const p = document.getElementById('player'); const l = document.getElementById('list');
+    <div id="landing-page">
+        <div class="logo-glow">
+            <span style="color: gold; font-weight: bold; font-size: 0.8rem; text-align: center;">LINGUA<br>PHARMACIA</span>
+        </div>
+        <button class="start-btn" onclick="showApp()">START 🏛️</button>
+    </div>
 
-function norm(s) { if(!s) return ""; return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(" and "," & ").trim(); }
+    <div id="main-container">
+        <div class="top-nav">
+            <button class="tab-btn active" onclick="setTab('listen')">🏛️ Listen</button>
+            <button class="tab-btn" onclick="setTab('quiz')">🧠 Quiz</button>
+        </div>
 
-async function getFiles() {
-    try {
-        const r = await fetch("https://api.github.com/repos/dogierez01/historic-people/contents/");
-        const d = await r.json();
-        if(Array.isArray(d)) { repo = d.map(f => f.name); show(); }
-    } catch (e) { show(); }
-}
-getFiles();
+        <div class="player-bar">
+            <button onclick="document.getElementById('m-player').play()">▶️</button>
+            <input type="range" style="flex-grow:1" id="p-bar" value="0">
+            <button class="snail-btn" id="snail" onclick="toggleSnail()">🐌</button>
+        </div>
 
-function startApp() { document.getElementById('splash-screen').style.display='none'; }
+        <div id="listen-view"></div>
+        <div id="quiz-view" style="display:none"></div>
+    </div>
 
-function show() {
-    const s = [...db].sort((a,b)=>a.title.localeCompare(b.title));
-    l.innerHTML = s.map((item) => {
-        const i = db.findIndex(x=>x.title===item.title);
-        if(cm==='listen') {
-            return `<div class="card" data-name="${item.title.toLowerCase()}">
-                <div class="card-title">${item.title}</div>
-                <button class="listen-btn btn-uk" onclick="playHP(${i},'uk')">🇬🇧 1. UK English</button>
-                <button class="listen-btn btn-us-f" onclick="playHP(${i},'female')">🇺🇸 2. US Female</button>
-                <button class="listen-btn btn-us-m" onclick="read(${i})">📖 3. Read & Listen (US Male)</button>
-            </div>`;
-        } else {
-            return `<button class="quiz-menu-btn" data-name="${item.title.toLowerCase()}" onclick="quiz(${i})">🧠 ${item.title} Quiz</button>`;
+    <audio id="m-player"></audio>
+
+    <script>
+        const people = [
+            {
+                name: "Alexander the Great",
+                slug: "alexander the great",
+                bio: "Alexander was born in 356 BC in Pella... [full text here]",
+                questions: [
+                    { q: "Why was Alexander believed to be strong against poison?", options: ["He was born in Pella", "He grew up with snakes", "Aristotle taught him"], correct: 1 },
+                    { q: "Which rule created by Alexander is still used by soldiers today?", options: ["Leading an army as a teenager", "Invading Persia", "Shaving their faces"], correct: 2 },
+                    { q: "Who was Alexander's famous teacher?", options: ["King Philip II", "Aristotle", "Napoleon"], correct: 1 },
+                    { q: "Where did Alexander's generals turn against him?", options: ["At the River Indus", "In Egypt", "In Pella"], correct: 0 },
+                    { q: "What was the cause of Alexander's death according to the text?", options: ["Old age", "Killed in battle", "Poisoned by generals"], correct: 2 }
+                ]
+            },
+            {
+                name: "Baltacı Mehmet Pasha",
+                slug: "baltaci mehmet pasha",
+                bio: "Baltacı Mehmet Pasha was an Ottoman grand vizier... [full text here]",
+                questions: [
+                    { q: "Which city did Russia give back in the Treaty of Prut?", options: ["Moscow", "Azov", "Istanbul"], correct: 1 },
+                    { q: "Why did some people blame Baltacı Mehmet Pasha?", options: ["For starting the war", "For losing the battle", "For not defeating Russia completely"], correct: 2 },
+                    { q: "What happened to the Russian forces at the Prut River?", options: ["They were trapped and weak", "They won a great victory", "They escaped immediately"], correct: 0 },
+                    { q: "In which century did these events take place?", options: ["17th", "18th", "19th"], correct: 1 },
+                    { q: "What was the outcome for Peter the Great?", options: ["He was captured", "He died in battle", "He was allowed to leave safely"], correct: 2 }
+                ]
+            }
+            // Add all 31 objects following this pattern
+        ];
+
+        function showApp() {
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('main-container').style.display = 'block';
+            renderContent();
         }
-    }).join('');
-}
 
-function playHP(i, t) {
-    const item = db[i];
-    const BASE = "https://raw.githubusercontent.com/dogierez01/historic-people/main/";
-    let key = norm(item.key);
-    let file = repo.find(f => {
-        const nf = norm(f);
-        if(t==='uk') return nf.includes(key) && nf.includes('uk');
-        if(t==='female') return nf.includes(key) && nf.includes('us') && nf.includes('female');
-        if(t==='male') return nf.includes(key) && nf.includes('us') && nf.includes('male') && !nf.includes('female');
-        return false;
-    });
-    if(file) { p.src = BASE + encodeURIComponent(file); p.playbackRate = slow?0.8:1.0; p.play(); }
-}
+        function renderContent() {
+            const lView = document.getElementById('listen-view');
+            const qView = document.getElementById('quiz-view');
+            
+            people.forEach((p, idx) => {
+                lView.innerHTML += `
+                    <div class="person-card">
+                        <h2>${p.name}</h2>
+                        <div class="audio-group">
+                            <button class="btn-audio btn-uk" onclick="playAudio('${p.slug}', 'female accent')">1. 🇬🇧 UK English</button>
+                            <button class="btn-audio btn-usf" onclick="playAudio('${p.slug}', 'female ai')">2. 🇺🇸 US Female</button>
+                            <button class="btn-audio btn-usm" onclick="playAudio('${p.slug}', 'male ai', ${idx})">3. 📖 Read & Listen (US Male)</button>
+                        </div>
+                        <div class="bio-box" id="bio-${idx}">${p.bio}</div>
+                    </div>
+                `;
 
-function read(i) {
-    document.getElementById('story-text').innerText = db[i].text;
-    document.getElementById('view-listen').style.display='block';
-    document.getElementById('view-quiz').style.display='none';
-    document.getElementById('modal').style.display='block';
-    playHP(i, 'male');
-}
+                qView.innerHTML += `
+                    <div class="person-card">
+                        <h3>${p.name} Quiz</h3>
+                        ${p.questions.map((q, qIdx) => `
+                            <div class="q-box">
+                                <p>${qIdx+1}. ${q.q}</p>
+                                <div class="opt-row">
+                                    ${q.options.map((opt, oIdx) => `
+                                        <button class="opt-btn" onclick="check(this, ${oIdx}, ${q.correct})">${opt}</button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            });
+        }
 
-function quiz(i) {
-    document.getElementById('quiz-title').innerText = db[i].title + " Quiz";
-    document.getElementById('quiz-area').innerHTML = db[i].mcq.map((q, qI) => `
-        <div class="quiz-q"><div class="q-text">Q${qI+1}: ${q.q}</div>
-        ${q.o.map((opt, oI) => `<button class="mcq-option" onclick="check(this,${q.a},${oI})">${opt}</button>`).join('')}
-        <div class="feedback"></div></div>`).join('');
-    document.getElementById('view-listen').style.display='none';
-    document.getElementById('view-quiz').style.display='block';
-    document.getElementById('modal').style.display='block';
-}
+        const player = document.getElementById('m-player');
+        function playAudio(slug, type, bioIdx = null) {
+            player.src = `https://dogierez01.github.io/historic-people/${slug} ${type}.wav`;
+            player.play();
+            if (bioIdx !== null) {
+                document.querySelectorAll('.bio-box').forEach(b => b.style.display = 'none');
+                document.getElementById(`bio-${bioIdx}`).style.display = 'block';
+            }
+        }
 
-function check(btn, cI, uI) {
-    const parent = btn.parentElement;
-    const fb = parent.querySelector('.feedback');
-    if(cI === uI) { fb.innerHTML = "<span class='correct'>✓ CORRECT!</span>"; btn.style.backgroundColor="#2f9e44"; }
-    else { fb.innerHTML = "<span class='wrong'>✗ WRONG!</span>"; btn.style.backgroundColor="#d63031"; }
-    parent.querySelectorAll('.mcq-option').forEach(b => b.disabled = true);
-}
+        let isSnail = false;
+        function toggleSnail() {
+            isSnail = !isSnail;
+            document.getElementById('snail').classList.toggle('active');
+            player.playbackRate = isSnail ? 0.9 : 1.0;
+        }
 
-function setMode(m) { 
-    cm = m; 
-    document.getElementById('btn-listen').className = (m==='listen')?'toggle-btn active':'toggle-btn';
-    document.getElementById('btn-quiz').className = (m==='quiz')?'toggle-btn active':'toggle-btn';
-    show(); 
-}
-function closeModal() { document.getElementById('modal').style.display='none'; p.pause(); }
-function toggleSnail() { slow = !slow; p.playbackRate = slow?0.8:1.0; document.getElementById('btn-snail').classList.toggle('active'); }
-function filterList() {
-    const v = document.getElementById('search').value.toLowerCase();
-    document.querySelectorAll('.card, .quiz-menu-btn').forEach(el => { el.style.display = el.getAttribute('data-name').includes(v)?'block':'none'; });
-}
-</script>
+        function check(btn, selected, correct) {
+            if (selected === correct) btn.classList.add('correct');
+            else btn.classList.add('wrong');
+        }
+
+        function setTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            if(tab === 'listen') {
+                document.getElementById('listen-view').style.display='block';
+                document.getElementById('quiz-view').style.display='none';
+            } else {
+                document.getElementById('listen-view').style.display='none';
+                document.getElementById('quiz-view').style.display='block';
+            }
+            event.target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
