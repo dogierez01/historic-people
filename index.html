@@ -23,7 +23,7 @@
         #audio-bar { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; }
         #player { height: 45px; width: 75%; outline: none; }
         #btn-snail { background: #111; color: white; border: 2px solid #ff0033; font-size: 28px; padding: 5px 20px; border-radius: 12px; cursor: pointer; }
-        #btn-snail.active { background: #0a1f0a; border-color: #39ff14; box-shadow: 0 0 10px #39ff14; }
+        #btn-snail.active { border-color: #39ff14; box-shadow: 0 0 10px #39ff14; }
 
         /* CONTENT ZONES */
         #content-area { padding: 20px; padding-top: 200px; max-width: 700px; margin: 0 auto; }
@@ -32,7 +32,7 @@
         .listen-btn { padding: 18px; border-radius: 12px; border: none; cursor: pointer; font-weight: 900; font-size: 18px; color: white; display: block; width: 100%; margin-bottom: 12px; }
         .btn-uk { background: #d63031; } .btn-us-f { background: #e056fd; } .btn-us-m { background: #007AFF; }
 
-        /* TEXT OVERLAY */
+        /* MODAL OVERLAY - 32PX FONT */
         #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 3000; overflow-y: auto; }
         #modal-content { padding: 50px; max-width: 900px; margin: 0 auto; padding-top: 100px; }
         #close-btn { position: fixed; top: 30px; right: 30px; font-size: 35px; cursor: pointer; color: white; z-index: 3100; background: #ff0033; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
@@ -87,24 +87,23 @@
             text: "Alexander was born in 356 BC in Pella, the capital of Macedon. His mother, Olympia, was a strong and mysterious woman. She prayed to snakes and kept many of them in the palace. Alexander grew up with these snakes. Poisonous snakes bit him, so his body became strong against poison. His father, King Philip II, was a very strict ruler. One night, he punished Alexander very badly. This difficult event helped make Alexander a fearless and strong man. Even as a young man, Alexander was special. He did not have a beard. He ordered all his soldiers to shave their faces, too. This rule for soldiers is still used today. He was a student of the famous teacher Aristotle. He learned about war and how to lead an army. He became a commander when he was still a teenager. Alexander wanted to conquer the whole world. He took control of many huge lands like Persia and Egypt. He even traveled as far as India. His army grew bigger and stronger. However, great power brought danger. When he was at the River Indus, his own generals turned against him. They poisoned him because they were tired of fighting. They wanted to stop and return to their homes and families.",
             mcq: [
                 { q: "Why was Alexander's body strong against poison?", options: ["He was born with a genetic mutation", "He grew up being bitten by palace snakes", "He took a special medicine every morning"], a: 1 },
-                { q: "What modern military rule did Alexander initiate?", ["Wearing uniforms", "Strict dietary laws", "Shaving the face"], a: 2 },
-                { q: "Who was Alexander's world-famous teacher?", ["Plato", "Aristotle", "Socrates"], a: 1 },
-                { q: "At what location did his generals turn against him?", ["The River Nile", "The River Indus", "The Persian Desert"], a: 1 },
-                { q: "Why did his generals decide to poison him?", ["They wanted more money", "They were tired and wanted to go home", "They wanted to join the Persian army"], a: 1 }
+                { q: "What modern military rule did Alexander initiate?", options: ["Wearing uniforms", "Strict dietary laws", "Shaving the face"], a: 2 },
+                { q: "Who was Alexander's world-famous teacher?", options: ["Plato", "Aristotle", "Socrates"], a: 1 },
+                { q: "At what location did his generals turn against him?", options: ["The River Nile", "The River Indus", "The Persian Desert"], a: 1 },
+                { q: "Why did his generals decide to poison him?", options: ["They wanted more money", "They were tired and wanted to go home", "They wanted to join the Persian army"], a: 1 }
             ]
         },
         {
             title: "Yusuf Pasha",
             text: "In 1788, a large Austrian army of about 100,000 soldiers camped in Romania to fight the Ottoman commander Yusuf Pasha. However, they never fought the enemy. Because of a foolish mistake and alcohol, the army destroyed itself. The trouble began one night when Austrian horsemen crossed a river and bought strong drinks from local people. They drank too much. When foot soldiers arrived and asked to share the drink, the horsemen refused. A big fight started between them, and someone fired a gun. This loud shot made the soldiers panic and run back toward their main camp in the dark. In the camp, soldiers woke up to the noise. They believed the enemy was attacking. Commanders shouted 'Halt!'—which means stop in German—to control their men. However, soldiers who spoke different languages heard 'Allah!' instead of 'Halt!' They were very afraid and fired guns and cannons at their own friends. Two days later, Yusuf Pasha arrived for a battle. Instead, he found dead and wounded Austrian soldiers everywhere. The survivors had escaped, so the Ottomans took the town easily. They won the victory because of the Austrian army's total confusion.",
             mcq: [
-                { q: "What was the size of the Austrian army in 1788?", ["50,000", "100,000", "200,000"], a: 1 },
-                { q: "What sparked the initial internal conflict?", ["A stolen map", "Alcohol bought from locals", "A disagreement over horses"], a: 1 },
-                { q: "Why did the soldiers in the camp fire at their own friends?", ["They were ordered to by Yusuf Pasha", "They mistook the word 'Halt' for 'Allah'", "They were trying to steal more drinks"], a: 1 },
-                { q: "What did Yusuf Pasha find when he arrived two days later?", ["A fully prepared army", "Dead and wounded Austrians", "A peaceful village"], a: 1 },
-                { q: "In what country was the Austrian army camping?", ["Germany", "Turkey", "Romania"], a: 2 }
+                { q: "What was the size of the Austrian army in 1788?", options: ["50,000", "100,000", "200,000"], a: 1 },
+                { q: "What sparked the initial internal conflict?", options: ["A stolen map", "Alcohol bought from locals", "A disagreement over horses"], a: 1 },
+                { q: "Why did the soldiers in the camp fire at their own friends?", options: ["They were ordered to by Yusuf Pasha", "They mistook the word 'Halt' for 'Allah'", "They were trying to steal more drinks"], a: 1 },
+                { q: "What did Yusuf Pasha find when he arrived two days later?", options: ["A fully prepared army", "Dead and wounded Austrians", "A peaceful village"], a: 1 },
+                { q: "In what country was the Austrian army camping?", options: ["Germany", "Turkey", "Romania"], a: 2 }
             ]
         }
-        // ... I will continue populating all 31 history figures following this 5-question MCQ format ...
     ];
 
     let currentMode = 'listen'; let isSlowMode = false; let repoFiles = [];
@@ -120,6 +119,7 @@
     }
     fetchFiles();
 
+    // FIXED START FUNCTION
     function startApp() { document.getElementById('splash-screen').style.display = 'none'; }
 
     function renderList() {
@@ -143,6 +143,7 @@
         if (type === 'uk') file = repoFiles.find(f => f.toLowerCase().includes(key) && f.toLowerCase().includes('uk'));
         else if (type === 'female') file = repoFiles.find(f => f.toLowerCase().includes(key) && f.toLowerCase().includes('us') && f.toLowerCase().includes('female'));
         else if (type === 'male') {
+            // STRICT EXCLUSION OF "FEMALE"
             file = repoFiles.find(f => f.toLowerCase().includes(key) && f.toLowerCase().includes('us') && f.toLowerCase().includes('male') && !f.toLowerCase().includes('female'));
         }
         if (file) { player.src = BASE + encodeURIComponent(file); player.playbackRate = isSlowMode ? 0.8 : 1.0; player.play(); }
@@ -171,7 +172,7 @@
         const parent = btn.parentElement;
         const fb = parent.querySelector('.feedback');
         fb.innerHTML = (correctIdx === userIdx) ? "<span class='correct'>✓ CORRECT!</span>" : "<span class='wrong'>✗ WRONG!</span>";
-        parent.querySelectorAll('.mcq-option').forEach(b => b.disabled = true);
+        parent.querySelectorAll('.mcq-option').forEach(b => { b.disabled = true; if(b.innerText === btn.innerText && correctIdx !== userIdx) b.style.borderColor = '#ff0033'; });
     }
 
     function setMode(m) { currentMode = m; 
