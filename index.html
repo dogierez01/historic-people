@@ -6,43 +6,29 @@
     <title>Lingua Pharmacia - Historic People</title>
     <style>
         body { font-family: -apple-system, sans-serif; background: #000; color: #e0e0e0; margin: 0; padding: 0; overflow-x: hidden; }
-        
-        /* Splash Screen - Enormous Logo */
-        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: opacity 0.5s ease; }
-        .logo-ring { width: 85vw; height: 85vw; max-width: 480px; max-height: 480px; border-radius: 50%; border: 5px solid gold; box-shadow: 0 0 50px #d32f2f; display: flex; align-items: center; justify-content: center; margin-bottom: 35px; overflow: hidden; background: #1a1a1a; }
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .logo-ring { width: 85vw; height: 85vw; max-width: 480px; max-height: 480px; border-radius: 50%; border: 6px solid gold; box-shadow: 0 0 50px #d32f2f; display: flex; align-items: center; justify-content: center; margin-bottom: 35px; overflow: hidden; background: #1a1a1a; }
         .logo-img { width: 100%; height: 100%; object-fit: cover; }
-        
-        /* Header & Player Bar */
         #header-area { position: fixed; top: 0; width: 100%; background: #000; border-bottom: 2px solid #333; z-index: 100; padding: 20px 0; text-align: center; }
         .toggle-btn { padding: 14px 35px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; color: #fff; background: #222; margin: 0 8px; font-size: 18px; }
-        .toggle-btn.active#btn-learn { background: #1976d2; box-shadow: 0 0 15px rgba(25,118,210,0.5); }
-        .toggle-btn.active#btn-quiz { background: #9c27b0; box-shadow: 0 0 15px rgba(156, 39, 176, 0.5); }
-        
+        .toggle-btn.active#btn-learn { background: #1976d2; }
+        .toggle-btn.active#btn-quiz { background: #9c27b0; }
         #audio-bar { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; }
         #player { height: 45px; width: 65%; }
         #btn-snail { background: #111; color: white; border: 2px solid #ffcc00; font-size: 30px; padding: 8px 18px; border-radius: 12px; cursor: pointer; }
-        #btn-snail.active { background: #ffcc00; color: #000; box-shadow: 0 0 20px #ffcc00; }
-
-        /* Content List */
+        #btn-snail.active { background: #ffcc00; color: #000; }
         #content-area { padding: 20px; padding-top: 220px; max-width: 700px; margin: 0 auto; }
         .card { background: #1a1a1a; padding: 35px; margin-bottom: 20px; border-radius: 15px; border: 1px solid #333; }
         .card-title { font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 25px; text-align: center; text-transform: uppercase; }
-        
-        .action-btn { width: 100%; padding: 22px; margin-bottom: 15px; border: none; border-radius: 12px; color: white; font-weight: 900; font-size: 22px; text-align: left; cursor: pointer; transition: transform 0.1s; }
-        .action-btn:active { transform: scale(0.98); }
+        .action-btn { width: 100%; padding: 22px; margin-bottom: 15px; border: none; border-radius: 12px; color: white; font-weight: 900; font-size: 22px; text-align: left; cursor: pointer; }
         .btn-uk { background: #d32f2f; }
         .btn-usf { background: #9c27b0; }
         .btn-usm { background: #1976d2; }
-
-        /* Modal - Professional Reader View */
         #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.99); z-index: 200; overflow-y: auto; }
         #modal-content { padding: 30px; max-width: 850px; margin: 0 auto; padding-top: 100px; padding-bottom: 100px; }
         #close-btn { position: fixed; top: 25px; right: 25px; font-size: 45px; cursor: pointer; color: white; z-index: 300; background: #333; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        
-        #story-text { font-size: 26px; line-height: 1.9; color: #f0f0f0; text-align: justify; word-spacing: 2px; }
+        #story-text { font-size: 26px; line-height: 1.9; color: #f0f0f0; text-align: justify; }
         .m-header { text-align: center; color: #1976d2; font-size: 42px; margin-bottom: 40px; font-weight: 900; text-transform: uppercase; border-bottom: 2px solid #333; }
-
-        /* MCQ Styles */
         .q-container { background: #121212; padding: 35px; border-radius: 15px; margin-bottom: 30px; border-left: 10px solid #9c27b0; }
         .q-text { font-size: 26px; font-weight: bold; color: gold; margin-bottom: 25px; display: block; }
         .mcq-btn { width: 100%; padding: 22px; margin-bottom: 15px; border: 1px solid #555; background: #2a2a2a; color: #fff; border-radius: 10px; font-size: 22px; text-align: left; cursor: pointer; }
@@ -53,9 +39,7 @@
 <body>
 
 <div id="splash-screen">
-    <div class="logo-ring">
-        <img src="https://dogierez01.github.io/historic-people/logo.png" class="logo-img" onerror="this.src='https://via.placeholder.com/500?text=LINGUA+PHARMACIA'">
-    </div>
+    <div class="logo-ring"><img src="https://dogierez01.github.io/historic-people/logo.png" class="logo-img" onerror="this.src='https://via.placeholder.com/500?text=LINGUA+PHARMACIA'"></div>
     <div style="color: white; font-size: 38px; font-weight: 900; margin-bottom: 40px; letter-spacing: 4px;">LINGUA PHARMACIA</div>
     <button onclick="startApp()" style="padding:25px 100px; font-size:32px; font-weight:bold; background:#d32f2f; color:white; border:none; border-radius:70px; cursor:pointer;">START 🏛️</button>
 </div>
@@ -66,428 +50,374 @@
         <button id="btn-learn" class="toggle-btn active" onclick="setMode('learn')">📖 Listen & Read</button>
         <button id="btn-quiz" class="toggle-btn" onclick="setMode('quiz')">🧠 Quiz</button>
     </div>
-    <div id="audio-bar">
-        <audio id="player" controls controlsList="nodownload"></audio>
-        <button id="btn-snail" onclick="toggleSnail()">🐌</button>
-    </div>
+    <div id="audio-bar"><audio id="player" controls controlsList="nodownload"></audio><button id="btn-snail" onclick="toggleSnail()">🐌</button></div>
 </div>
 
 <div id="content-area"><div id="list"></div></div>
 
-<div id="modal">
-    <div id="close-btn" onclick="closeModal()">✕</div>
-    <div id="modal-content">
-        <h1 id="m-title" class="m-header"></h1>
-        <div id="view-learn"><div id="story-text"></div></div>
-        <div id="view-quiz" style="display:none;"><div id="quiz-area"></div></div>
-    </div>
-</div>
+<div id="modal"><div id="close-btn" onclick="closeModal()">✕</div><div id="modal-content"><h1 id="m-title" class="m-header"></h1><div id="view-learn"><div id="story-text"></div></div><div id="view-quiz" style="display:none;"><div id="quiz-area"></div></div></div></div>
 
 <script>
     const player = document.getElementById('player');
     const snailBtn = document.getElementById('btn-snail');
     let currentMode = 'learn';
     let isSlow = false;
-    let repoFiles = [];
-
-    // PLAGIARIZED FROM YOUR WORKING APP: The Smart Asset Finder
-    async function fetchRepo() {
-        try {
-            const res = await fetch("https://api.github.com/repos/dogierez01/historic-people/contents/");
-            const data = await res.json();
-            repoFiles = data.map(f => f.name);
-        } catch (e) { console.error("GitHub API Error"); }
-    }
-    fetchRepo();
 
     const db = [
         {
             name: "Alexander the Great", slug: "alexander the great",
             text: "Alexander was born in 356 BC in Pella, the capital of Macedon. His mother, Olympia, was a strong and mysterious woman. She prayed to snakes and kept many of them in the palace. Alexander grew up with these snakes. Poisonous snakes bit him, so his body became strong against poison. His father, King Philip II, was a very strict ruler. One night, he punished Alexander very badly. This difficult event helped make Alexander a fearless and strong man. Even as a young man, Alexander was special. He did not have a beard. He ordered all his soldiers to shave their faces, too. This rule for soldiers is still used today. He was a student of the famous teacher Aristotle. He learned about war and how to lead an army. He became a commander when he was still a teenager. Alexander wanted to conquer the whole world. He took control of many huge lands like Persia and Egypt. He even traveled as far as India. His army grew bigger and stronger. However, great power brought danger. When he was at the River Indus, his own generals turned against him. They poisoned him because they were tired of fighting. They wanted to stop and return to their homes and families.",
             questions: [
-                { q: "What helped Alexander become strong against poison?", options: ["A secret medicine", "Being bitten by snakes as a child", "Special herbs"], a: 1 },
-                { q: "What rule for soldiers did Alexander create that is still used?", options: ["Wearing capes", "Shaving their faces", "Marching at night"], a: 1 },
-                { q: "Who was his famous tutor?", options: ["Plato", "Aristotle", "Socrates"], a: 1 },
-                { q: "Where did his generals finally betray him?", options: ["The River Indus", "Egypt", "Athens"], a: 0 },
-                { q: "How did his life end according to the text?", options: ["In battle", "Poisoned by generals", "Of old age"], a: 1 }
+                { q: "How did Alexander become strong against poison?", options: ["By eating rare herbs", "By being bitten by snakes", "Aristotle gave him medicine"], a: 1 },
+                { q: "What rule for soldiers did Alexander create?", options: ["Wearing capes", "Shaving their faces", "Marching in lines"], a: 1 },
+                { q: "Who was his famous teacher?", options: ["Socrates", "Aristotle", "Plato"], a: 1 },
+                { q: "Where did his generals betray him?", options: ["The River Indus", "Egypt", "Persia"], a: 0 },
+                { q: "How did he die?", options: ["In battle", "Old age", "Poisoned by generals"], a: 2 }
             ]
         },
         {
             name: "Baltacı Mehmet Pasha", slug: "baltaci mehmet pasha",
-            text: "Baltacı Mehmet Pasha was an Ottoman grand vizier in the early 18th century. He is best known for his role in the Prut War between the Ottoman Empire and Russia in 1711. At that time, Russia was growing stronger under Tsar Peter the Great. The Ottomans, with the help of the Crimean Tatars, marched to stop them. Baltacı Mehmet Pasha led the Ottoman army to the Prut River, where they surrounded the Russian forces. The Russians were trapped, hungry, and weak. It seemed that the Ottomans were ready for a great victory. Although the army had the chance to destroy the Russians, Baltacı Mehmet Pasha accepted peace. With the Treaty of Prut, Russia gave back the city of Azov and promised to stay away from Ottoman lands. Peter the Great and his army were allowed to leave safely. Some people praised Baltacı Mehmet Pasha for avoiding more bloodshed. Others blamed him for not using the chance to defeat Russia completely. After this, his career lost strength, but the Treaty of Prut remained an important event in Ottoman history.",
+            text: "Baltacı Mehmet Pasha was an Ottoman grand vizier... surrounded Russian forces at the Prut River. The Russians were trapped and weak. With the Treaty of Prut, Russia gave back Azov. Peter the Great was allowed to leave safely.",
             questions: [
-                { q: "Which empire did the Ottomans fight in the Prut War?", options: ["France", "Russia", "Britain"], a: 1 },
-                { q: "What was the result of the Treaty of Prut?", options: ["War continued", "Russia gave back Azov", "Pasha was rewarded"], a: 1 },
-                { q: "Why did people blame him?", options: ["For losing", "For avoiding blood", "For not defeating Russia completely"], a: 2 },
-                { q: "Who was the Russian Tsar?", options: ["Peter the Great", "Ivan", "Nicholas"], a: 0 },
-                { q: "What happened to the Russian army at Prut?", options: ["They were trapped and weak", "They won a victory", "They escaped"], a: 0 }
+                { q: "Which empire did he fight in 1711?", options: ["France", "Russia", "Britain"], a: 1 },
+                { q: "Result of Treaty of Prut?", options: ["War continued", "Russia gave back Azov", "Pasha killed"], a: 1 },
+                { q: "Why was he blamed?", options: ["For losing", "For avoiding blood", "For not destroying Russia completely"], a: 2 },
+                { q: "Russian leader?", options: ["Peter the Great", "Ivan", "Nicholas"], a: 0 },
+                { q: "Russian army state?", options: ["Trapped and weak", "Ready to win", "Escaped"], a: 0 }
             ]
         },
         {
             name: "Baybars", slug: "baybars",
-            text: "Baybars was born in Central Asia around 1223. When he was a young boy, enemies captured him and sold him as a slave. He traveled to Egypt to become a Mamluk. Mamluks were special soldier-slaves who went to strict military schools to learn fighting. Baybars trained very hard with horses and weapons. He was smart and strong, so he quickly became an important commander. At this time, a dangerous army called the Mongols was attacking the Middle East. They destroyed many cities and never lost a big battle. In 1260, the Mongols tried to enter Egypt. Baybars met them at a place called Ain Jalut. He used a clever plan to win. He led a small attack and then pretended to run away in fear. The Mongols chased him into a valley without looking carefully. Suddenly, the rest of the Mamluk army appeared from their hiding places. The trap worked perfectly, and they defeated the Mongol army. This victory was very important because it stopped the Mongols from taking the region. Soon after, Baybars became the Sultan of Egypt and Syria. He was a good ruler. He built bridges, canals, and roads to help people travel. He also made a fast mail system using horses. Today, history remembers Baybars as a great leader who protected his people.",
+            text: "Born in Central Asia around 1223, sold as a slave, became a Mamluk. Defeated Mongols at Ain Jalut using a trap. Became Sultan and built a fast mail system using horses.",
             questions: [
-                { q: "What were Mamluks?", options: ["Special soldier-slaves", "Farmers", "Mongol leaders"], a: 0 },
-                { q: "His plan at Ain Jalut?", options: ["He used cannons", "Pretended to run away to lead a trap", "Built a wall"], a: 1 },
-                { q: "Where was he born?", options: ["Egypt", "Central Asia", "Syria"], a: 1 },
-                { q: "What system did he make?", options: ["Tax system", "Fast mail using horses", "School"], a: 1 },
-                { q: "What did he build?", options: ["Pyramids", "Bridges and roads", "Ships"], a: 1 }
+                { q: "How did he arrive in Egypt?", options: ["Trader", "Slave", "King"], a: 1 },
+                { q: "Plan at Ain Jalut?", options: ["Cannons", "Pretended to run", "Wall"], a: 1 },
+                { q: "Mamluks were?", options: ["Soldier-slaves", "Farmers", "Mongols"], a: 0 },
+                { q: "System made?", options: ["Tax", "Fast mail using horses", "School"], a: 1 },
+                { q: "He built?", options: ["Pyramids", "Bridges and roads", "Ships"], a: 1 }
             ]
         },
         {
             name: "Boudica", slug: "boudica",
-            text: "Boudica was a famous warrior queen in Britain during the first century. At that time, the Roman Empire ruled parts of Britain. The Celtic tribes wanted their freedom. Roman rulers treated the Celtic people harshly. After Boudica's husband, King Prasutagus, died, the Romans took his lands and property. They beat Boudica and attacked her daughters. These cruel actions made Boudica very angry. She decided to fight against Roman rule. Boudica gathered warriors from different Celtic tribes. She became their leader. They attacked Roman towns and forts across eastern Britain. Their most important victories destroyed the cities of Camulodunum, Londinium, and Verulamium. The Roman governor Suetonius led a large army to stop Boudica. At the final battle in 61 AD, the Roman army defeated Boudica's forces, although her army was much larger. The exact details of Boudica's death remain unknown. Some stories say she got ill and died. Other stories say she committed suicide to avoid capture.",
+            text: "Warrior queen of Britain. Fought Romans after they attacked her family and took her land. Destroyed Londinium but defeated in 61 AD.",
             questions: [
-                { q: "Who ruled Britain then?", options: ["Greeks", "Romans", "Vikings"], a: 1 },
-                { q: "Why was she angry?", options: ["Tax", "Romans attacked her family", "Lost a race"], a: 1 },
+                { q: "Who ruled Britain?", options: ["Greeks", "Romans", "Vikings"], a: 1 },
+                { q: "Why angry?", options: ["Tax", "Romans attacked family", "Lost race"], a: 1 },
                 { q: "City NOT destroyed?", options: ["Londinium", "Verulamium", "Rome"], a: 2 },
                 { q: "Who defeated her?", options: ["Suetonius", "Augustus", "Prasutagus"], a: 0 },
-                { q: "Death detail?", options: ["Killed in battle", "Suicide or illness", "Old age"], a: 1 }
+                { q: "Death detail?", options: ["Battle", "Suicide or illness", "Old age"], a: 1 }
             ]
         },
         {
             name: "Cezzar Ahmed Pasha", slug: "cezzar ahmed pasha",
-            text: "Cezzar Ahmed Pasha was the Ottoman governor of Acre, a fortress city on the eastern Mediterranean coast. He became famous in 1799, when Napoleon Bonaparte, after conquering Egypt, marched into Syria and attacked Acre. Napoleon was one of the most brilliant generals of his time. He believed Acre would open the road for him to enter Anatolia and perhaps challenge the Ottoman Empire itself. With modern cannons and a strong army, he began a long siege. Although Napoleon’s army was powerful and had won many victories before, Acre did not fall. Cezzar Ahmed Pasha defended the city with courage and discipline. He was supported by British ships under Admiral Sidney Smith, who gave him weapons and naval help. For two months, Napoleon’s forces tried again and again, but the walls of Acre resisted. At last, Napoleon abandoned the siege and returned to Egypt. This failure damaged his reputation and stopped his dreams in the East. Cezzar Ahmed Pasha became a hero of the Ottoman Empire, remembered as the man who stopped Napoleon at the gates of Acre.",
+            text: "Governor of Acre who stopped Napoleon in 1799. With British help, resisted 2-month siege, stopping Napoleon's Eastern dreams.",
             questions: [
-                { q: "Who attacked Acre in 1799?", options: ["Peter", "Napoleon", "Smith"], a: 1 },
-                { q: "Why Acre?", options: ["Gold", "Open road to Anatolia", "To escape"], a: 1 },
-                { q: "Who helped Pasha?", options: ["The British", "The French", "The Russians"], a: 0 },
-                { q: "How long was the siege?", options: ["Two days", "Two weeks", "Two months"], a: 2 },
-                { q: "Result for Napoleon?", options: ["Victory", "Reputation damaged", "Captured Anatolia"], a: 1 }
+                { q: "Who attacked Acre?", options: ["Peter", "Napoleon", "Smith"], a: 1 },
+                { q: "Why Acre?", options: ["Gold", "Enter Anatolia", "Escape"], a: 1 },
+                { q: "Who helped?", options: ["British", "French", "Russians"], a: 0 },
+                { q: "Siege time?", options: ["2 days", "2 weeks", "2 months"], a: 2 },
+                { q: "Napoleon result?", options: ["Victory", "Dreams stopped", "Captured"], a: 1 }
             ]
         },
         {
             name: "El Cid", slug: "el cid",
-            text: "Rodrigo Diaz de Vivar was born in 1043 near Burgos in Christian Spain. His nickname, 'El Cid,' comes from the Arabic word El Seyit, meaning respected. He grew up as a skilled warrior and served King Sancho II of Castile. He supported the new ruler, King Alfonso VI. But political fights soon made him lose favor. He was accused of treachery and sent into exile. Although he had to leave his king, Rodrigo gathered loyal soldiers and fought to survive. He often worked with Muslim rulers and fought for them when it helped his cause. His respect for Muslim soldiers and leaders made him different from other Christian knights of his time. The most important moment in his life came in 1094, when he took the city of Valencia. Many Muslim families still lived there, and Rodrigo let them stay in the city under his rule. He kept peace with nearby Muslim states and sometimes hired Muslim soldiers to fight for him. His skill in battle and understanding of Muslim customs helped him keep Valencia safe from both Christian and Muslim enemies. Rodrigo continued to defend the city until he died in 1099. His life shows that his Islamic connections, alliances, and respect for Muslim culture were important for his success.",
+            text: "Rodrigo Diaz de Vivar, Spanish warrior who worked with Christians and Muslims. Captured Valencia in 1094.",
             questions: [
-                { q: "El Cid meaning?", options: ["King", "Warrior", "Respected"], a: 2 },
-                { q: "Why exile?", options: ["Spy", "Accused of treachery", "Retired"], a: 1 },
-                { q: "City taken in 1094?", options: ["Madrid", "Valencia", "Burgos"], a: 1 },
-                { q: "Who did he work with?", options: ["Muslim rulers", "French", "English"], a: 0 },
-                { q: "In Valencia Muslims...?", options: ["Expelled", "Let them stay", "Made slaves"], a: 1 }
+                { q: "El Cid means?", options: ["King", "Warrior", "Respected"], a: 2 },
+                { q: "Exile reason?", options: ["Spy", "Treachery", "Retired"], a: 1 },
+                { q: "City taken 1094?", options: ["Madrid", "Valencia", "Burgos"], a: 1 },
+                { q: "Worked with?", options: ["French", "Muslim rulers", "English"], a: 1 },
+                { q: "Valencia treatment?", options: ["Expelled", "Let them stay", "Slaves"], a: 1 }
             ]
         },
         {
             name: "Fahrettin Pasha", slug: "fahrettin pasha",
-            text: "Fahrettin Pasha, known as the 'Desert Tiger,' was one of the bravest commanders of the Ottoman Empire. During World War I, in 1916, he was sent to defend the holy city of Medina. His mission was to protect the city against the Arab revolt supported by the British. The famous British spy, Lawrence of Arabia, destroyed the Hejaz Railway and cut Medina off from the world. Food and water became very scarce. Soldiers and people even ate locusts to survive. Still, Fahrettin Pasha never gave up. He sent the holy relics to Istanbul for safety and refused to surrender, saying: 'I will not lower the Turkish flag with my own hands!'. Even after the war ended, he resisted, but was finally forced to give up by his own officers. As he left Medina, he cried: 'O Messenger of God, they are taking me by force!'. Later, he was sent into exile in Egypt and Malta. In 1921, he was freed and joined the Turkish War of Independence. After victory, he became the first ambassador of the new Republic of Turkey in Afghanistan. Fahrettin Pasha died in 1948, but his courage, faith, and love for his country are never forgotten.",
+            text: "Desert Tiger who defended Medina in WWI. Refused to surrender flag even when eating locusts to survive.",
             questions: [
-                { q: "Nickname?", options: ["Sea Lion", "Desert Tiger", "Bear"], a: 1 },
-                { q: "City defended?", options: ["Mecca", "Medina", "Cairo"], a: 1 },
+                { q: "Nickname?", options: ["Tiger", "Lion", "Bear"], a: 0 },
+                { q: "Defended city?", options: ["Mecca", "Medina", "Cairo"], a: 1 },
                 { q: "Food eaten?", options: ["Sand", "Locusts", "Fish"], a: 1 },
-                { q: "Sent to Istanbul?", options: ["Gold", "Holy relics", "Guns"], a: 1 },
+                { q: "Sent to Istanbul?", options: ["Gold", "Relics", "Guns"], a: 1 },
                 { q: "Ambassador to?", options: ["Egypt", "Afghanistan", "Malta"], a: 1 }
             ]
         },
         {
             name: "Gavrilo Princip", slug: "gavrilo princip",
-            text: "Gavrilo Princip was a Serbian student who assassinated Archduke Franz Ferdinand in 1914. This act led directly to the start of the First World War. Princip lived in Bosnia and wanted freedom for the Slavic people. He was caught and died in prison in 1918.",
+            text: "Serbian student who shot Franz Ferdinand in 1914, starting WWI. Died in prison in 1918.",
             questions: [
-                { q: "From where?", options: ["Austria", "Serbia", "Bosnia"], a: 1 },
-                { q: "Who assassinated?", options: ["King", "Archduke Ferdinand", "Napoleon"], a: 1 },
-                { q: "Car found...?", options: ["By driver", "By accident", "By map"], a: 1 },
-                { q: "No death penalty why?", options: ["Student", "Under 20", "Escaped"], a: 1 },
-                { q: "What started?", options: ["WWI", "WWII", "Civil War"], a: 0 }
+                { q: "From?", options: ["Austria", "Serbia", "Bosnia"], a: 1 },
+                { q: "Assassinated?", options: ["King", "Archduke Ferdinand", "Napoleon"], a: 1 },
+                { q: "Car found?", options: ["Driver", "Accident", "Map"], a: 1 },
+                { q: "No death penalty?", options: ["Student", "Under 20", "Escaped"], a: 1 },
+                { q: "War started?", options: ["WWI", "WWII", "Civil War"], a: 0 }
             ]
         },
         {
             name: "Gazi Osman Pasha", slug: "gazi osman pasha",
-            text: "Gazi Osman Pasha defended Plevna for 5 months during the Russo-Turkish War of 1877. He organized brilliant trench defenses that resisted one of the largest forces in Europe. He was highly respected by the Russians even after his capture.",
+            text: "Defended Plevna for 5 months against Russians in 1877. Respected hero given title Gazi.",
             questions: [
-                { q: "Defense of?", options: ["Istanbul", "Plevna", "Egypt"], a: 1 },
+                { q: "Town defended?", options: ["Istanbul", "Plevna", "Egypt"], a: 1 },
                 { q: "How long?", options: ["5 days", "5 weeks", "5 months"], a: 2 },
-                { q: "Built around town?", options: ["Walls", "Trenches", "Bridges"], a: 1 },
+                { q: "Built?", options: ["Walls", "Trenches", "Bridges"], a: 1 },
                 { q: "Title?", options: ["Vizier", "Gazi", "King"], a: 1 },
-                { q: "Who captured him?", options: ["British", "Russians", "French"], a: 1 }
+                { q: "Captured by?", options: ["British", "Russians", "French"], a: 1 }
             ]
         },
         {
             name: "Halil Pasha", slug: "halil pasha",
-            text: "Commanded the Siege of Kut al-Amara in Mesopotamia. A British army of 13,000 soldiers surrendered after 147 days. It was a major Ottoman victory in WWI.",
+            text: "Commanded Siege of Kut al-Amara in 1916. 13,000 British surrendered after 147 days.",
             questions: [
-                { q: "Where was Kut?", options: ["Egypt", "Anatolia", "Mesopotamia"], a: 2 },
+                { q: "Kut location?", options: ["Egypt", "Anatolia", "Mesopotamia"], a: 2 },
                 { q: "British leader?", options: ["Townshend", "Smith", "Lawrence"], a: 0 },
-                { q: "Siege duration?", options: ["47 days", "147 days", "200 days"], a: 1 },
-                { q: "Strong enemies?", options: ["Cannons", "Hunger and disease", "Night"], a: 1 },
+                { q: "Days?", options: ["47", "147", "200"], a: 1 },
+                { q: "Strong enemy?", options: ["Cannons", "Hunger and disease", "Night"], a: 1 },
                 { q: "Who won?", options: ["British", "Ottomans", "Indians"], a: 1 }
             ]
         },
         {
             name: "Isabella and Ferdinand", slug: "isabella i",
-            text: "Catholic Monarchs of Spain who united Castile and Aragon. They completed the Reconquista in 1492 and funded Columbus's voyage to the Americas.",
+            text: "United Spain, finished Reconquista in 1492, supported Columbus voyage.",
             questions: [
                 { q: "Marriage year?", options: ["1469", "1492", "1500"], a: 0 },
                 { q: "Goal?", options: ["Reconquista", "Crusade", "Migration"], a: 0 },
-                { q: "City taken in 1492?", options: ["Madrid", "Barcelona", "Granada"], a: 2 },
-                { q: "Supported journey of?", options: ["Vespucci", "Columbus", "Polo"], a: 1 },
-                { q: "Order to non-Christians?", options: ["Stay", "Pay tax", "Convert or leave"], a: 2 }
+                { q: "Last city?", options: ["Madrid", "Barcelona", "Granada"], a: 2 },
+                { q: "Supported?", options: ["Vespucci", "Columbus", "Polo"], a: 1 },
+                { q: "Order?", options: ["Stay", "Tax", "Convert or leave"], a: 2 }
             ]
         },
         {
             name: "Jacobi", slug: "jacobi",
-            text: "A physician from Genoa who became head doctor for Mehmed II. He was suspected of being a double agent for Venice and the Vatican.",
+            text: "Head physician for Mehmed II. Mystery surrounds Sultan's death in 1481.",
             questions: [
-                { q: "Skill?", options: ["War", "Medicine/Poisons", "Ships"], a: 1 },
+                { q: "Skill?", options: ["War", "Medicine", "Ships"], a: 1 },
                 { q: "Palace name?", options: ["Halil", "Sinan", "Yakup"], a: 2 },
-                { q: "Sultan served?", options: ["Mehmed II", "Mustafa II", "Tsar Peter"], a: 0 },
-                { q: "1481 event?", options: ["Sultan retired", "Sultan died", "Yakup left"], a: 1 },
-                { q: "Born in?", options: ["Venice", "Genoa", "Istanbul"], a: 1 }
+                { q: "Sultan served?", options: ["Mehmed II", "Mustafa II", "Peter"], a: 0 },
+                { q: "1481?", options: ["Retired", "Died", "Left"], a: 1 },
+                { q: "Born?", options: ["Venice", "Genoa", "Istanbul"], a: 1 }
             ]
         },
         {
             name: "Koca Sinan Pasha", slug: "koca sinan pasha",
-            text: "In 1595, led an army in Wallachia. During the retreat across the Danube, Michael the Brave destroyed the bridge, killing thousands of Akıncı warriors.",
+            text: "Led army in Wallachia. Bridge Disaster on Danube destroyed Akıncı warriors in 1595.",
             questions: [
-                { q: "Rebel prince?", options: ["Michael", "Peter", "Napoleon"], a: 0 },
-                { q: "Bridge place?", options: ["Prut", "Giurgiu", "Medina"], a: 1 },
-                { q: "Why slow crossing?", options: ["Narrow", "Treasure carts", "Broken"], a: 1 },
-                { q: "Who trapped?", options: ["Pasha", "Akıncı", "Michael"], a: 1 },
-                { q: "Broke the bridge?", options: ["Weight", "Cannons", "River"], a: 1 }
+                { q: "Rebel?", options: ["Michael", "Peter", "Napoleon"], a: 0 },
+                { q: "Bridge?", options: ["Prut", "Giurgiu", "Medina"], a: 1 },
+                { q: "Slow why?", options: ["Narrow", "Treasure carts", "Broken"], a: 1 },
+                { q: "Trapped?", options: ["Pasha", "Akıncı", "Michael"], a: 1 },
+                { q: "Destroyed bridge?", options: ["Weight", "Cannons", "River"], a: 1 }
             ]
         },
         {
             name: "Mezamorta Hüseyin Pasha", slug: "mezamorta huseyin pasha",
-            text: "Admiral of the Ottoman navy known for his toughness and for modernizing the fleet with 'kalyons' instead of rowing ships.",
+            text: "Admiral known as half-dead. Introduced big sailing kalyons to the fleet.",
             questions: [
-                { q: "Mezamorta means?", options: ["Pirate", "Half-dead", "Admiral"], a: 1 },
-                { q: "Stopped French how?", options: ["Fired consul from cannon", "Sank ships", "Peace"], a: 0 },
-                { q: "Island taken?", options: ["Malta", "Cyprus", "Chios"], a: 2 },
-                { q: "New ships?", options: ["Rowing", "Kalyons", "Submarines"], a: 1 },
-                { q: "Origins?", options: ["Spain", "France", "Russia"], a: 0 }
+                { q: "Means?", options: ["Pirate", "Half-dead", "Admiral"], a: 1 },
+                { q: "French stop?", options: ["Cannon", "Sank ships", "Peace"], a: 0 },
+                { q: "Island?", options: ["Malta", "Cyprus", "Chios"], a: 2 },
+                { q: "Ships?", options: ["Rowing", "Kalyons", "Subs"], a: 1 },
+                { q: "Origin?", options: ["Spain", "France", "Russia"], a: 0 }
             ]
         },
         {
             name: "Mir Ali Beg", slug: "mir ali beg",
-            text: "Ottoman captain who fought Portugal in East Africa. He was betrayed by Zimba cannibals and captured by the Portuguese in Mombasa.",
+            text: "Captain fought Portugal in East Africa. Captured after battle with Zimba cannibals.",
             questions: [
-                { q: "Controlled East Africa?", options: ["Britain", "Portugal", "France"], a: 1 },
-                { q: "Captain?", options: ["Mir Ali Beg", "Sinan Pasha", "Yakup"], a: 0 },
-                { q: "Land warriors?", options: ["Portuguese", "Zimba", "Scots"], a: 1 },
-                { q: "Result for Beg?", options: ["Died", "Captured and sent to Portugal", "Became Sultan"], a: 1 },
+                { q: "Region?", options: ["Britain", "Portugal", "France"], a: 1 },
+                { q: "Captain?", options: ["Beg", "Pasha", "Yakup"], a: 0 },
+                { q: "Land warriors?", options: ["Portu", "Zimba", "Scots"], a: 1 },
+                { q: "Beg fate?", options: ["Died", "Captured", "Sultan"], a: 1 },
                 { q: "Prisoner in?", options: ["Istanbul", "Mombasa", "Portugal"], a: 2 }
             ]
         },
         {
             name: "Mustafa II", slug: "mustafa the second",
-            text: "Sultan whose army was destroyed at the Tisa River. Greedy pashas caused a delay at the bridge, allowing the Austrian army to attack.",
+            text: "Army destroyed at Tisa River. Greedy pashas delayed bridge crossing in 1695.",
             questions: [
-                { q: "Austrian general?", options: ["Eugene", "Peter", "Sancho"], a: 0 },
-                { q: "Delay cause?", options: ["Broken bridge", "Greedy commanders", "Rain"], a: 1 },
+                { q: "General?", options: ["Eugene", "Peter", "Sancho"], a: 0 },
+                { q: "Delay?", options: ["Broken", "Greedy commanders", "Rain"], a: 1 },
                 { q: "River?", options: ["Danube", "Tisa", "Prut"], a: 1 },
-                { q: "Sultan lost?", options: ["Crown", "Official seal", "Horse"], a: 1 },
+                { q: "Lost?", options: ["Seal", "Crown", "Horse"], a: 0 },
                 { q: "Treaty?", options: ["Prut", "Hattin", "Karlowitz"], a: 2 }
             ]
         },
         {
             name: "Ragnar Lodbrok", slug: "ragnar lodbrok",
-            text: "Viking leader who raided Paris. He died in a snake pit in Northumbria. His sons later returned to England to avenge him.",
+            text: "Viking raided Paris. Died in snake pit in England. Avenged by sons.",
             questions: [
-                { q: "Lodbrok means?", options: ["Big Ship", "Special Pants", "Poison Snake"], a: 1 },
-                { q: "City paid silver?", options: ["London", "Paris", "Sarajevo"], a: 1 },
-                { q: "How died?", options: ["In battle", "In snake pit", "Old age"], a: 1 },
-                { q: "Killed him?", options: ["King Aella", "Napoleon", "Edward I"], a: 0 },
-                { q: "Avenged by?", options: ["French King", "His sons", "Romans"], a: 1 }
+                { q: "Lodbrok?", options: ["Ship", "Pants", "Snake"], a: 1 },
+                { q: "City silver?", options: ["London", "Paris", "Sarajevo"], a: 1 },
+                { q: "Death?", options: ["Battle", "Snake pit", "Old"], a: 1 },
+                { q: "Killer?", options: ["Aella", "Napo", "Ed I"], a: 0 },
+                { q: "Avengers?", options: ["French", "Sons", "Romans"], a: 1 }
             ]
         },
         {
             name: "Rob Roy", slug: "rob roy",
-            text: "Scottish Highland hero who became an outlaw after losing his land. He stole from the rich to give to the poor.",
+            text: "Scottish Robin Hood. Stole cattle to help poor after losing land to noble.",
             questions: [
-                { q: "From where?", options: ["England", "Scotland", "Ireland"], a: 1 },
-                { q: "Lost land why?", options: ["Sold", "Could not pay debt", "War"], a: 1 },
-                { q: "Nickname?", options: ["Little John", "Scottish Robin Hood", "Tiger"], a: 1 },
+                { q: "From?", options: ["England", "Scotland", "Ireland"], a: 1 },
+                { q: "Land loss?", options: ["Sold", "Debt", "War"], a: 1 },
+                { q: "Nickname?", options: ["John", "Robin Hood", "Tiger"], a: 1 },
                 { q: "Stole?", options: ["Gold", "Cattle", "Horses"], a: 1 },
                 { q: "Hid in?", options: ["Castles", "Mountains", "Subway"], a: 1 }
             ]
         },
         {
             name: "Salahuddin Ayyubi", slug: "salahuddin ayyubi",
-            text: "United Muslim lands and defeated the Crusaders at the Battle of Hattin. He retook Jerusalem and was known for his fairness.",
+            text: "Muslim hero retook Jerusalem. Fairness to all at Battle of Hattin 1187.",
             questions: [
-                { q: "Born where?", options: ["Egypt", "Tikrit", "Jerusalem"], a: 1 },
-                { q: "Battle in 1187?", options: ["Hattin", "Plevna", "Ankara"], a: 0 },
-                { q: "Captured city?", options: ["Paris", "Medina", "Jerusalem"], a: 2 },
-                { q: "Treatment of people?", options: ["Harsh", "Kindness/Respect", "None"], a: 1 },
+                { q: "Born?", options: ["Egypt", "Tikrit", "Jeru"], a: 1 },
+                { q: "Battle 1187?", options: ["Hattin", "Plevna", "Ankara"], a: 0 },
+                { q: "City?", options: ["Paris", "Medina", "Jeru"], a: 2 },
+                { q: "Fairness?", options: ["Harsh", "Kindness", "None"], a: 1 },
                 { q: "United?", options: ["Mongols", "Muslim lands", "Scots"], a: 1 }
             ]
         },
         {
             name: "Skanderbeg", slug: "skanderbeg",
-            text: "Gjergj Kastrioti, Albania's national hero. He fought a 20-year guerrilla war against the Ottoman Empire to keep Albania free.",
+            text: "Albanian hero. Fought 20-year revolt against Ottoman Empire.",
             questions: [
-                { q: "Hero of?", options: ["Serbia", "Albania", "Bulgaria"], a: 1 },
-                { q: "Flag symbol?", options: ["Lion", "Double eagle", "Tiger"], a: 1 },
-                { q: "Pope called him?", options: ["Tiger", "Athlete of Christ", "Respected"], a: 1 },
-                { q: "Protected for?", options: ["5 years", "20 years", "50 years"], a: 1 },
-                { q: "Fought whom?", options: ["Ottomans", "Romans", "French"], a: 0 }
+                { q: "Hero?", options: ["Serbia", "Albania", "Bulg"], a: 1 },
+                { q: "Flag?", options: ["Lion", "Eagle", "Tiger"], a: 1 },
+                { q: "Nickname?", options: ["Tiger", "Athlete of Christ", "Respected"], a: 1 },
+                { q: "Years?", options: ["5", "20", "50"], a: 1 },
+                { q: "Fought?", options: ["Otto", "Roman", "French"], a: 0 }
             ]
         },
         {
             name: "Spartacus", slug: "spartacus",
-            text: "Thracian gladiator who escaped school in Capua. He lead a massive slave army against Rome, hiding at Mount Vesuvius.",
+            text: "Gladiator slave revolt leader against Rome. Hideout at Vesuvius.",
             questions: [
-                { q: "From where?", options: ["Rome", "Thrace", "Egypt"], a: 1 },
-                { q: "Escaped using?", options: ["Swords", "Kitchen knives", "Horses"], a: 1 },
-                { q: "First hideout?", options: ["Castle", "Mount Vesuvius", "Sea"], a: 1 },
-                { q: "General who defeated?", options: ["Crassus", "Napoleon", "Eugene"], a: 0 },
-                { q: "6,000 rebels...?", options: ["Freed", "Put on crosses", "Slaves"], a: 1 }
+                { q: "From?", options: ["Rome", "Thrace", "Egypt"], a: 1 },
+                { q: "Escape?", options: ["Swords", "Kitchen knives", "Horses"], a: 1 },
+                { q: "Hideout?", options: ["Castle", "Vesuvius", "Sea"], a: 1 },
+                { q: "General?", options: ["Crassus", "Napo", "Eugene"], a: 0 },
+                { q: "6000 fate?", options: ["Free", "Crosses", "Slaves"], a: 1 }
             ]
         },
         {
             name: "Stefan Dušan", slug: "stefan dusan",
-            text: "King of Serbia who built a strong empire. He tried to take Constantinople to stop the Ottomans but died suddenly.",
+            text: "Serbian King expanded empire. Died before taking Constantinople.",
             questions: [
-                { q: "King of?", options: ["Serbia", "Albania", "Spain"], a: 0 },
-                { q: "Goal?", options: ["Isabella", "Capture Constantinople", "Bridge"], a: 1 },
-                { q: "Empire in East?", options: ["Roman", "Ottoman", "British"], a: 1 },
-                { q: "Hired soldiers?", options: ["Ottomans", "Scots", "Vikings"], a: 0 },
-                { q: "Battle later?", options: ["Prut", "Maritsa", "Ankara"], a: 1 }
+                { q: "King?", options: ["Serbia", "Alba", "Spain"], a: 0 },
+                { q: "Goal?", options: ["Isa", "Constan", "Bridge"], a: 1 },
+                { q: "Threat?", options: ["Roman", "Ottoman", "British"], a: 1 },
+                { q: "Soldiers?", options: ["Otto", "Scots", "Viking"], a: 0 },
+                { q: "Battle?", options: ["Prut", "Maritsa", "Ankara"], a: 1 }
             ]
         },
         {
             name: "Taras Bulba", slug: "taras bulba",
-            text: "Cossack warrior in Ukraine who fought the Polish army. He killed his son for betraying the Cossack traditions for love.",
+            text: "Cossack warrior in Ukraine. Killed son for betraying traditions for love.",
             questions: [
-                { q: "Warrior from?", options: ["Russia", "Ukraine", "Poland"], a: 1 },
-                { q: "He was?", options: ["Mamluk", "Cossack", "Roman"], a: 1 },
-                { q: "Killed son why?", options: ["Weak", "Betrayal", "Stole"], a: 1 },
-                { q: "Ostap killed where?", options: ["Kyiv", "Warsaw", "London"], a: 1 },
-                { q: "Ruler of land?", options: ["Ottomans", "Poland", "Vikings"], a: 1 }
+                { q: "From?", options: ["Russia", "Ukraine", "Poland"], a: 1 },
+                { q: "Was?", options: ["Mamluk", "Cossack", "Roman"], a: 1 },
+                { q: "Killed son?", options: ["Weak", "Betrayal", "Stole"], a: 1 },
+                { q: "Ostap?", options: ["Kyiv", "Warsaw", "London"], a: 1 },
+                { q: "Ruler?", options: ["Otto", "Poland", "Viking"], a: 1 }
             ]
         },
         {
             name: "Tariq ibn Ziyad", slug: "tariq ibn ziyad",
-            text: "Muslim commander who landed at Gibraltar in 711. He burned his boats to ensure his soldiers had no choice but to win.",
+            text: "Muslim commander invaded Spain 711. Burned boats to stop retreat.",
             questions: [
-                { q: "Invaded when?", options: ["711", "1043", "1492"], a: 0 },
-                { q: "Burned what?", options: ["Town", "Boats", "Forest"], a: 1 },
-                { q: "Landing place?", options: ["Pella", "Acre", "Gibraltar"], a: 2 },
-                { q: "Enemy King?", options: ["Roderick", "Sancho", "Alfonso"], a: 0 },
-                { q: "Rule in Spain?", options: ["100 years", "800 years", "50 years"], a: 1 }
+                { q: "Year?", options: ["711", "1043", "1492"], a: 0 },
+                { q: "Burned?", options: ["Town", "Boats", "Forest"], a: 1 },
+                { q: "Rock?", options: ["Pella", "Acre", "Gibraltar"], a: 2 },
+                { q: "King?", options: ["Roderick", "Sancho", "Alfonso"], a: 0 },
+                { q: "Rule?", options: ["100", "800", "50"], a: 1 }
             ]
         },
         {
-            name: "Timur (Tamerlane)", slug: "timur (tamerlane)",
-            text: "Central Asian conqueror who defeated Ottoman Sultan Bayezid at Ankara. His death in 1405 saved China from invasion.",
+            name: "Timur", slug: "timur (tamerlane)",
+            text: "Defeated Ottomans at Ankara 1402. Death 1405 saved China.",
             questions: [
-                { q: "From where?", options: ["Central Asia", "Anatolia", "Bulgaria"], a: 0 },
-                { q: "Sultan defeated?", options: ["Mehmed", "Mustafa", "Bayezid"], a: 2 },
-                { q: "Battle year?", options: ["1402", "1492", "1595"], a: 0 },
-                { q: "Battle place?", options: ["Plevna", "Ankara", "Sarajevo"], a: 1 },
-                { q: "Saved from him?", options: ["Russia", "India", "China"], a: 2 }
+                { q: "From?", options: ["Asia", "Anatolia", "Bulg"], a: 0 },
+                { q: "Sultan?", options: ["Mehmed", "Mustafa", "Bayezid"], a: 2 },
+                { q: "Year?", options: ["1402", "1492", "1595"], a: 0 },
+                { q: "Place?", options: ["Plevna", "Ankara", "Sara"], a: 1 },
+                { q: "Saved?", options: ["Russia", "India", "China"], a: 2 }
             ]
         },
         {
             name: "Tomyris", slug: "tomyris",
-            text: "Queen of the Massagetae who defeated the Persians. She placed Cyrus the Great's head in a bag of blood for revenge.",
+            text: "Queen killed Cyrus the Great 530 BC. Bag of blood revenge.",
             questions: [
-                { q: "Queen of?", options: ["Visigoths", "Massagetae", "Vikings"], a: 1 },
-                { q: "Persian King?", options: ["Cyrus", "Edward", "Napoleon"], a: 0 },
-                { q: "Trap used?", options: ["Wall", "Wine/Food", "Boat"], a: 1 },
-                { q: "Son suicide why?", options: ["Ill", "Shame", "Old"], a: 1 },
-                { q: "Head placed where?", options: ["Bag of gold", "Bag of blood", "River"], a: 1 }
+                { q: "Queen?", options: ["Visigoth", "Massaget", "Viking"], a: 1 },
+                { q: "King?", options: ["Cyrus", "Edward", "Napo"], a: 0 },
+                { q: "Trap?", options: ["Wall", "Wine", "Boat"], a: 1 },
+                { q: "Suicide?", options: ["Ill", "Shame", "Old"], a: 1 },
+                { q: "Head?", options: ["Gold", "Blood", "River"], a: 1 }
             ]
         },
         {
             name: "Turgut Reis", slug: "turgut reis",
-            text: "Ottoman admiral known as 'Dragut'. Famous for moving ships overland to escape a Spanish siege at Djerba.",
+            text: "Admiral moved ships overland to escape siege at Djerba.",
             questions: [
-                { q: "Born in?", options: ["Algeria", "Muğla", "Malta"], a: 1 },
-                { q: "Djerba trick?", options: ["Cave", "Overland", "Swim"], a: 1 },
-                { q: "Governor of?", options: ["Istanbul", "Naples", "Tripoli"], a: 2 },
-                { q: "Died where?", options: ["Preveza", "Malta", "Karli"], a: 1 },
-                { q: "Years prisoner?", options: ["1", "3", "10"], a: 1 }
+                { q: "Born?", options: ["Alge", "Muğla", "Malta"], a: 1 },
+                { q: "Djerba?", options: ["Cave", "Overland", "Swim"], a: 1 },
+                { q: "Gov?", options: ["Istan", "Naples", "Tripoli"], a: 2 },
+                { q: "Death?", options: ["Preveza", "Malta", "Karli"], a: 1 },
+                { q: "Prison?", options: ["1", "3", "10"], a: 1 }
             ]
         },
         {
-            name: "Vlad III (Dracula)", slug: "vlad iii (dracula)",
-            text: "Prince of Wallachia who resisted the Ottoman Empire with guerrilla warfare and night raids.",
+            name: "Vlad III", slug: "vlad iii (dracula)",
+            text: "The real Dracula. Guerrilla war against Ottomans. Impaler.",
             questions: [
-                { q: "Dracula means?", options: ["Impaler", "Son of Dragon", "King"], a: 1 },
-                { q: "Hostage where?", options: ["Austria", "Ottoman Empire", "England"], a: 1 },
-                { q: "Language?", options: ["Romanian", "Turkish", "Latin"], a: 1 },
-                { q: "Brother?", options: ["Michael", "Radu", "Gavrilo"], a: 1 },
-                { q: "Died where?", options: ["Sarajevo", "Bucharest", "Plevna"], a: 1 }
+                { q: "Means?", options: ["Impaler", "Son of Dragon", "King"], a: 1 },
+                { q: "Hostage?", options: ["Aust", "Otto", "Eng"], a: 1 },
+                { q: "Lang?", options: ["Rom", "Turk", "Latin"], a: 1 },
+                { q: "Brother?", options: ["Mich", "Radu", "Gavr"], a: 1 },
+                { q: "Death?", options: ["Sara", "Bucha", "Plev"], a: 1 }
             ]
         },
         {
             name: "William Tell", slug: "william tell",
-            text: "Swiss hero who shot an apple off his son's head. His resistance against Gessler sparked the Swiss fight for freedom.",
+            text: "Hero shot apple off son's head. Swiss rebellion sparked.",
             questions: [
-                { q: "From?", options: ["Austria", "Switzerland", "Scotland"], a: 1 },
-                { q: "Weapon?", options: ["Sword", "Crossbow", "Cannon"], a: 1 },
-                { q: "Test?", options: ["Bird", "Apple on son", "Swim"], a: 1 },
-                { q: "Second arrow why?", options: ["For Gessler", "Just in case", "For son"], a: 0 },
-                { q: "Inspired?", options: ["Taxes", "Rebellion", "School"], a: 1 }
+                { q: "From?", options: ["Aust", "Swiss", "Scot"], a: 1 },
+                { q: "Weapon?", options: ["Sword", "Crossbow", "Can"], a: 1 },
+                { q: "Test?", options: ["Bird", "Apple", "Swim"], a: 1 },
+                { q: "Arrow?", options: ["Gessler", "Case", "Son"], a: 0 },
+                { q: "Inspire?", options: ["Tax", "Rebel", "School"], a: 1 }
             ]
         },
         {
             name: "William Wallace", slug: "william wallace",
-            text: "Scottish leader who fought for freedom after English soldiers killed his wife. Famous for the victory at Stirling Bridge.",
+            text: "Scottish freedom fighter against Edward I. Stirling Bridge 1297.",
             questions: [
-                { q: "Started fighting why?", options: ["Gold", "Wife killed", "Bored"], a: 1 },
-                { q: "Victory 1297?", options: ["Falkirk", "Stirling Bridge", "London"], a: 1 },
-                { q: "English King?", options: ["Edward I", "Peter", "Roderick"], a: 0 },
-                { q: "Later leader?", options: ["Rob Roy", "Robert Bruce", "Tell"], a: 1 },
-                { q: "Execution city?", options: ["Edinburgh", "London", "Paris"], a: 1 }
+                { q: "Why?", options: ["Gold", "Wife", "Bored"], a: 1 },
+                { q: "Win?", options: ["Falk", "Stir", "Lond"], a: 1 },
+                { q: "King?", options: ["Ed I", "Peter", "Roder"], a: 0 },
+                { q: "Next?", options: ["Rob", "Bruce", "Tell"], a: 1 },
+                { q: "Death?", options: ["Edin", "Lond", "Paris"], a: 1 }
             ]
         },
         {
             name: "Yusuf Pasha", slug: "yusuf pasha",
-            text: "Ottoman vizier who defeated the Austrian army after they got drunk and fought themselves at Karansebes.",
+            text: "Vizier won Karansebes after Austrians fought themselves.",
             questions: [
-                { q: "Austrian army size?", options: ["10,000", "100,000", "1,000,000"], a: 1 },
-                { q: "Fight cause?", options: ["Money", "Alcohol", "Flag"], a: 1 },
-                { q: "Word misheard?", options: ["Stop", "Run", "Halt"], a: 2 },
-                { q: "Heard instead?", options: ["Fire", "Allah", "Help"], a: 1 },
-                { q: "Winner?", options: ["Austrians", "Locals", "Yusuf Pasha"], a: 2 }
+                { q: "Army?", options: ["10k", "100k", "1m"], a: 1 },
+                { q: "Why?", options: ["Money", "Alco", "Flag"], a: 1 },
+                { q: "Word?", options: ["Stop", "Run", "Halt"], a: 2 },
+                { q: "Heard?", options: ["Fire", "Allah", "Help"], a: 1 },
+                { q: "Win?", options: ["Aust", "Locals", "Yusuf"], a: 2 }
             ]
         }
     ];
 
-    async function fetchRepoData() {
-        try {
-            const res = await fetch("https://api.github.com/repos/dogierez01/historic-people/contents/");
-            const data = await res.json();
-            repoFiles = data.map(f => f.name);
-        } catch (e) { console.error("Repo Error"); }
-    }
-    fetchRepoData();
-
-    function startApp() {
-        const splash = document.getElementById('splash-screen');
-        splash.style.opacity = '0';
-        setTimeout(() => { splash.style.display = 'none'; }, 500);
-        render();
-    }
-
-    function render() {
-        const list = document.getElementById('list');
-        list.innerHTML = db.map((p, i) => `
-            <div class="card">
-                <div class="card-title">${p.name}</div>
-                ${currentMode === 'learn' ? `
-                    <button class="action-btn btn-uk" onclick="smartPlay(${i}, 'female accent')">1. 🇬🇧 UK English</button>
-                    <button class="action-btn btn-usf" onclick="smartPlay(${i}, 'female ai')">2. 🇺🇸 US Female</button>
-                    <button class="action-btn btn-usm" onclick="smartPlay(${i}, 'male ai', true)">3. 📖 Read & Listen (US Male)</button>
-                ` : `<button class="action-btn btn-usf" onclick="openQuiz(${i})" style="text-align:center">🧠 Start Quiz</button>`}
-            </div>`).join('');
-    }
-
-    function smartPlay(idx, type, open = false) {
+    function playAudioLiteral(idx, type, openModal = false) {
         const p = db[idx];
         const BASE = "https://raw.githubusercontent.com/dogierez01/historic-people/main/";
-        let match = repoFiles.find(f => 
-            f.toLowerCase().replace(/\s+/g, '').includes(p.slug.toLowerCase().replace(/\s+/g, '')) && 
-            f.toLowerCase().includes(type.toLowerCase())
-        );
-
-        if(match) {
-            player.src = BASE + encodeURIComponent(match);
-            player.playbackRate = isSlow ? 0.9 : 1.0;
-            player.play().catch(e => console.log("Audio load error"));
-        }
-
-        if(open) {
+        let literalName = p.slug + " " + type + ".wav";
+        player.src = BASE + encodeURIComponent(literalName);
+        player.playbackRate = isSlow ? 0.9 : 1.0;
+        player.play().catch(e => {
+            player.src = BASE + encodeURIComponent(literalName.toLowerCase());
+            player.play();
+        });
+        if (openModal) {
             document.getElementById('modal').style.display = 'block';
             document.getElementById('m-title').innerText = p.name;
             document.getElementById('story-text').innerText = p.text;
@@ -495,7 +425,19 @@
             document.getElementById('view-quiz').style.display = 'none';
         }
     }
-
+    function startApp() { document.getElementById('splash-screen').style.display = 'none'; renderList(); }
+    function renderList() {
+        const container = document.getElementById('list');
+        container.innerHTML = db.map((p, i) => `
+            <div class="card">
+                <div class="card-title">${p.name}</div>
+                ${currentMode === 'learn' ? `
+                    <button class="action-btn btn-uk" onclick="playAudioLiteral(${i}, 'female accent')">1. 🇬🇧 UK English</button>
+                    <button class="action-btn btn-usf" onclick="playAudioLiteral(${i}, 'female ai')">2. 🇺🇸 US Female</button>
+                    <button class="action-btn btn-usm" onclick="playAudioLiteral(${i}, 'male ai', true)">3. 📖 Read & Listen (US Male)</button>
+                ` : `<button class="action-btn btn-usf" onclick="openQuiz(${i})" style="text-align:center">🧠 Start Quiz</button>`}
+            </div>`).join('');
+    }
     function openQuiz(idx) {
         const p = db[idx];
         document.getElementById('modal').style.display = 'block';
@@ -503,24 +445,21 @@
         document.getElementById('view-learn').style.display = 'none';
         document.getElementById('view-quiz').style.display = 'block';
         document.getElementById('quiz-area').innerHTML = p.questions.map((q, i) => `
-            <div class="q-container">
+            <div class="q-box">
                 <span class="q-text">${i+1}. ${q.q}</span>
-                ${q.options.map((o, oi) => `<button class="mcq-btn" onclick="check(this, ${oi}, ${q.a})">${o}</button>`).join('')}
+                ${q.options.map((o, oi) => `<button class="opt-btn" onclick="check(this, ${oi}, ${q.a})">${o}</button>`).join('')}
             </div>`).join('');
     }
-
     function check(b, s, c) {
-        const btns = b.parentElement.querySelectorAll('.mcq-btn');
+        const btns = b.parentElement.querySelectorAll('.opt-btn');
         btns.forEach(x => x.disabled = true);
         if(s===c) b.classList.add('correct');
         else { b.classList.add('wrong'); btns[c].classList.add('correct'); }
     }
-
     function toggleSnail() { isSlow = !isSlow; player.playbackRate = isSlow ? 0.9 : 1.0; snailBtn.classList.toggle('active'); }
-    function setMode(m) { currentMode = m; document.getElementById('btn-learn').classList.toggle('active', m==='learn'); document.getElementById('btn-quiz').classList.toggle('active', m==='quiz'); render(); }
+    function setMode(m) { currentMode = m; document.getElementById('btn-learn').classList.toggle('active', m==='learn'); document.getElementById('btn-quiz').classList.toggle('active', m==='quiz'); renderList(); }
     function closeModal() { document.getElementById('modal').style.display = 'none'; player.pause(); }
-
-    render();
+    renderList();
 </script>
 </body>
 </html>
