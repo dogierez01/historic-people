@@ -31,29 +31,30 @@
 <script>
     const status = document.getElementById('status');
     const player = document.getElementById('player');
-    const targetFile = "mezamorta male us.wav"; // EXACT filename from your screenshot
+    const targetFile = "mezamorta male us.wav"; 
 
     async function runLiteralTest() {
         status.innerText = "Querying GitHub API...";
         try {
+            // This pulls the actual list of files currently in your master branch
             const response = await fetch("https://api.github.com/repos/dogierez01/historic-people/contents/");
             const files = await response.json();
             
-            // Flexible resemblance check: ignores case and spaces to find your literal file
+            // Find the file by ignoring spaces/case to be 100% sure we find it
             const match = files.find(f => 
                 f.name.toLowerCase().replace(/\s+/g, '') === targetFile.toLowerCase().replace(/\s+/g, '')
             );
             
             if (match && match.download_url) {
-                status.innerText = "File identified! Playing literal GitHub download URL...";
-                player.src = match.download_url; // Use the direct, temporary link GitHub generates
+                status.innerText = "File identified! Playing...";
+                player.src = match.download_url; // Direct link provided by GitHub API
                 player.play();
                 document.getElementById('modal').style.display = 'block';
             } else {
-                status.innerText = "Error: '" + targetFile + "' not found in GitHub's own list.";
+                status.innerText = "Error: '" + targetFile + "' not found in your repository list.";
             }
         } catch (e) {
-            status.innerText = "Connection Error: Check your repository name/visibility.";
+            status.innerText = "Connection Error: Check repository settings or API limits.";
         }
     }
 
