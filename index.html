@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mezamorta - Truth Test</title>
+    <title>Mezamorta Literal Test</title>
     <style>
         body { font-family: -apple-system, sans-serif; background: #000; color: #e0e0e0; text-align: center; padding: 20px; }
         .card { background: #1a1a1a; padding: 40px; border-radius: 20px; border: 4px solid gold; max-width: 600px; margin: 50px auto; }
         .btn { width: 100%; padding: 22px; margin: 12px 0; border: none; border-radius: 12px; color: white; font-weight: 900; font-size: 22px; cursor: pointer; text-align: left; }
         .v-uk { background: #d32f2f; } .v-usf { background: #9c27b0; } .v-usm { background: #1976d2; }
-        #status { margin-top: 15px; color: gold; font-weight: bold; }
         #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 100; overflow-y: auto; padding: 40px; box-sizing: border-box; }
         #story-text { font-size: 26px; line-height: 1.8; text-align: justify; }
     </style>
@@ -18,10 +17,9 @@
 
 <div class="card">
     <h1 style="font-size: 32px;">MEZAMORTA HÜSEYİN PASHA</h1>
-    <div id="status">Connecting to Repository...</div>
-    <button class="btn v-uk" onclick="playMezamorta('mezamorta male uk.wav')">1. 🇬🇧 UK English</button>
-    <button class="btn v-usf" onclick="playMezamorta('mezamorta female us.wav')">2. 🇺🇸 US Female</button>
-    <button class="btn v-usm" onclick="playMezamorta('mezamorta male us.wav', true)">3. 📖 Read & Listen (US Male)</button>
+    <button class="btn v-uk" onclick="playNow('mezamorta male uk.wav')">1. 🇬🇧 UK English (Male)</button>
+    <button class="btn v-usf" onclick="playNow('mezamorta female us.wav')">2. 🇺🇸 US Female</button>
+    <button class="btn v-usm" onclick="playNow('mezamorta male us.wav', true)">3. 📖 Read & Listen (US Male)</button>
     <audio id="player"></audio>
 </div>
 
@@ -32,33 +30,24 @@
 </div>
 
 <script>
-    const status = document.getElementById('status');
     const player = document.getElementById('player');
-    let repoFiles = [];
 
-    // LITERALLY FETCHING THE LIST (Matches Screenshot Data)
-    async function sync() {
-        try {
-            const res = await fetch("https://api.github.com/repos/dogierez01/historic-people/contents/");
-            repoFiles = await res.json();
-            status.innerText = "Verified: Files Loaded from Repo.";
-        } catch (e) { status.innerText = "Connection Failed."; }
-    }
-    sync();
-
-    function playMezamorta(target, open) {
-        // MATCHING THE FILENAME FROM YOUR SCREENSHOT LITERALLY
-        const match = repoFiles.find(f => f.name.toLowerCase() === target.toLowerCase());
+    function playNow(fileName, openModal = false) {
+        // PLAGIARIZED FROM YOUR ANIMAL KINGDOM APP: The Direct Raw Path
+        // We use 'master' as seen in your branch screenshot
+        const BASE = "https://raw.githubusercontent.com/dogierez01/historic-people/master/";
         
-        if (match && match.download_url) {
-            player.src = match.download_url; // Use GitHub's own secret direct link
+        // This is the literal URL for the file
+        player.src = BASE + encodeURIComponent(fileName);
+        player.load(); // Force the browser to recognize the new file
+        player.play().catch(e => {
+            console.log("Master branch failed, trying Main...");
+            // Fallback to 'main' just in case the branch was renamed
+            player.src = "https://raw.githubusercontent.com/dogierez01/historic-people/main/" + encodeURIComponent(fileName);
             player.play();
-            status.innerText = "Playing: " + target;
-        } else {
-            status.innerText = "File Not Found: " + target;
-        }
+        });
 
-        if (open) { document.getElementById('modal').style.display = 'block'; }
+        if (openModal) { document.getElementById('modal').style.display = 'block'; }
     }
 
     function closeModal() { document.getElementById('modal').style.display = 'none'; player.pause(); }
