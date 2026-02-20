@@ -3,80 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mezamorta Final Test</title>
+    <title>Literal Proof Test</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #000; color: #e0e0e0; margin: 0; padding: 0; }
-        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .logo-ring { width: 350px; height: 350px; border-radius: 50%; border: 6px solid gold; box-shadow: 0 0 60px #d32f2f; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; background: #1a1a1a; overflow: hidden; }
-        .logo-img { width: 100%; height: 100%; object-fit: cover; }
-        .start-btn { padding: 25px 100px; font-size: 32px; font-weight: bold; background: #d32f2f; color: white; border: none; border-radius: 60px; cursor: pointer; }
-        #header-area { position: fixed; top: 0; width: 100%; background: #000; border-bottom: 2px solid #333; z-index: 100; padding: 20px 0; text-align: center; }
-        #audio-bar { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; }
-        #player { height: 45px; width: 65%; }
-        #btn-snail { background: #111; color: white; border: 2px solid #ffcc00; font-size: 28px; padding: 5px 15px; border-radius: 12px; cursor: pointer; }
-        #btn-snail.active { background: #ffcc00; color: #000; }
-        #content-area { padding: 20px; padding-top: 180px; max-width: 750px; margin: 0 auto; }
-        .card { background: #1a1a1a; padding: 35px; margin-bottom: 20px; border-radius: 15px; border: 1px solid #333; }
-        .card-title { font-size: 30px; font-weight: bold; color: #fff; margin-bottom: 20px; text-align: center; }
-        .voice-btn { width: 100%; padding: 22px; margin-bottom: 12px; border: none; border-radius: 12px; color: white; font-weight: 900; font-size: 22px; text-align: left; cursor: pointer; }
-        .v-uk { background: #d32f2f; }
-        .v-usf { background: #9c27b0; }
-        .v-usm { background: #1976d2; }
-        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.99); z-index: 200; overflow-y: auto; }
-        #modal-content { padding: 30px; max-width: 850px; margin: 0 auto; padding-top: 80px; }
-        #close-btn { position: fixed; top: 20px; right: 20px; font-size: 45px; cursor: pointer; color: white; z-index: 300; background: #333; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        #story-text { font-size: 26px; line-height: 1.8; color: #f5f5f5; text-align: justify; padding-bottom: 100px; }
+        body { font-family: -apple-system, sans-serif; background: #000; color: #e0e0e0; text-align: center; padding: 20px; }
+        .card { background: #1a1a1a; padding: 40px; border-radius: 20px; border: 4px solid gold; max-width: 600px; margin: 100px auto; }
+        .btn { width: 100%; padding: 25px; margin: 15px 0; border: none; border-radius: 15px; color: white; font-weight: 900; font-size: 24px; cursor: pointer; background: #1976d2; }
+        #status { margin-top: 20px; color: gold; font-weight: bold; font-size: 20px; }
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 100; overflow-y: auto; padding: 40px; box-sizing: border-box; }
+        #story-text { font-size: 26px; line-height: 1.8; text-align: justify; }
     </style>
 </head>
 <body>
 
-<div id="splash-screen">
-    <div class="logo-ring"><img src="https://dogierez01.github.io/historic-people/logo.png" class="logo-img" onerror="this.src='https://via.placeholder.com/350?text=LOGO'"></div>
-    <div style="color: #fff; font-size: 36px; font-weight: 900; margin-bottom: 40px;">LINGUA PHARMACIA</div>
-    <button class="start-btn" onclick="startApp()">START 🏛️</button>
+<div class="card">
+    <h1 style="font-size: 36px;">MEZAMORTA</h1>
+    <div id="status">Ready to test...</div>
+    <button class="btn" onclick="runLiteralTest()">3. 📖 READ & LISTEN (US MALE)</button>
+    <audio id="player"></audio>
 </div>
 
-<div id="header-area">
-    <div style="font-weight:900; color:gold; margin-bottom:10px; font-size:22px;">🏛️ BRANCH FIX: MEZAMORTA</div>
-    <div id="audio-bar"><audio id="player" controls></audio><button id="btn-snail" onclick="toggleSnail()">🐌</button></div>
+<div id="modal">
+    <button onclick="closeModal()" style="background: #333; color: white; padding: 20px; font-size: 24px; border-radius: 50%; border: none; cursor: pointer; float: right;">✕</button>
+    <h1 style="color: #1976d2; font-size: 44px; margin-bottom: 40px;">Mezamorta Hüseyin Pasha</h1>
+    <div id="story-text">Mezamorta Hüseyin Pasha was a famous Ottoman admiral born in the 17th century. Some people say he was originally from Spain and later became a Muslim. He started his career as a sailor and a pirate in the Mediterranean Sea. His interesting nickname, 'Mezamorta,' means 'half-dead' in Italian. In a big battle against the Venetians, he was hurt very badly. His enemies thought he was dead, but he survived. Because of this amazing event, he got his famous name. By 1674, he was a captain and attacked many enemy ships. In 1683, the French navy attacked Algiers. The leader of Algiers wanted to give up, but Mezamorta refused. He became the new ruler and defended the city. To show his strength, he put the French consul into a large cannon and fired him at the enemy ships. This stopped the French attack. Later, he attacked the French coast until they agreed to peace. Later, Mezamorta went to Istanbul to join the Ottoman navy. In 1695, he won back Chios Island from the Venetians. Because of this victory, the Sultan made him the Grand Admiral, or 'Kapudan Pasha.' He changed how the navy fought. He stopped using old rowing ships and started using big sailing ships called 'kalyons.' Mezamorta died from an illness in 1701 while getting ready for a new war.</div>
 </div>
-
-<div id="content-area">
-    <div class="card">
-        <div class="card-title">Mezamorta Hüseyin Pasha</div>
-        <button class="voice-btn v-uk" onclick="playLiteral('mezamorta male uk.wav')">1. 🇬🇧 UK English</button>
-        <button class="voice-btn v-usf" onclick="playLiteral('mezamorta female us.wav')">2. 🇺🇸 US Female</button>
-        <button class="voice-btn v-usm" onclick="playLiteral('mezamorta male us.wav', true)">3. 📖 Read & Listen (US Male)</button>
-    </div>
-</div>
-
-<div id="modal"><div id="close-btn" onclick="closeModal()">✕</div><div id="modal-content"><h1 id="m-title" style="text-align:center; color:#1976d2; font-size:38px; margin-bottom:30px;"></h1><div id="story-text"></div></div></div>
 
 <script>
+    const status = document.getElementById('status');
     const player = document.getElementById('player');
-    const snailBtn = document.getElementById('btn-snail');
-    let isSlow = false;
+    const targetFile = "mezamorta male us.wav"; // EXACT filename from your screenshot
 
-    const bioText = "Mezamorta Hüseyin Pasha was a famous Ottoman admiral born in the 17th century. Some people say he was originally from Spain and later became a Muslim. He started his career as a sailor and a pirate in the Mediterranean Sea. His interesting nickname, 'Mezamorta,' means 'half-dead' in Italian. In a big battle against the Venetians, he was hurt very badly. His enemies thought he was dead, but he survived. Because of this amazing event, he got his famous name. By 1674, he was a captain and attacked many enemy ships. In 1683, the French navy attacked Algiers. The leader of Algiers wanted to give up, but Mezamorta refused. He became the new ruler and defended the city. To show his strength, he put the French consul into a large cannon and fired him at the enemy ships. This stopped the French attack. Later, he attacked the French coast until they agreed to peace. Later, Mezamorta went to Istanbul to join the Ottoman navy. In 1695, he won back Chios Island from the Venetians. Because of this victory, the Sultan made him the Grand Admiral, or 'Kapudan Pasha.' He changed how the navy fought. He stopped using old rowing ships and started using big sailing ships called 'kalyons.' Mezamorta died from an illness in 1701 while getting ready for a new war.";
-
-    function playLiteral(fileName, openText = false) {
-        // THE CORRECTION: Using "master" instead of "main"
-        const BASE = "https://raw.githubusercontent.com/dogierez01/historic-people/master/";
-        player.src = BASE + encodeURIComponent(fileName);
-        player.playbackRate = isSlow ? 0.9 : 1.0;
-        player.play().catch(e => {
-            console.error("Audio failed. Branch may still be incorrect or file missing.");
-        });
-
-        if (openText) {
-            document.getElementById('modal').style.display = 'block';
-            document.getElementById('m-title').innerText = "Mezamorta Hüseyin Pasha";
-            document.getElementById('story-text').innerText = bioText;
+    async function runLiteralTest() {
+        status.innerText = "Querying GitHub API...";
+        try {
+            const response = await fetch("https://api.github.com/repos/dogierez01/historic-people/contents/");
+            const files = await response.json();
+            
+            // Flexible resemblance check: ignores case and spaces to find your literal file
+            const match = files.find(f => 
+                f.name.toLowerCase().replace(/\s+/g, '') === targetFile.toLowerCase().replace(/\s+/g, '')
+            );
+            
+            if (match && match.download_url) {
+                status.innerText = "File identified! Playing literal GitHub download URL...";
+                player.src = match.download_url; // Use the direct, temporary link GitHub generates
+                player.play();
+                document.getElementById('modal').style.display = 'block';
+            } else {
+                status.innerText = "Error: '" + targetFile + "' not found in GitHub's own list.";
+            }
+        } catch (e) {
+            status.innerText = "Connection Error: Check your repository name/visibility.";
         }
     }
 
-    function toggleSnail() { isSlow = !isSlow; player.playbackRate = isSlow ? 0.9 : 1.0; snailBtn.classList.toggle('active'); }
-    function startApp() { document.getElementById('splash-screen').style.display = 'none'; }
     function closeModal() { document.getElementById('modal').style.display = 'none'; player.pause(); }
 </script>
 </body>
